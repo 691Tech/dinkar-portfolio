@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradDsa" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF8F5" />
+      <stop offset="100%" stop-color="#F5EFE8" />
+    </linearGradient>
+    <filter id="softShadowDsa" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#1C1613" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bgGradDsa)" rx="24" />
+
+  <g filter="url(#softShadowDsa)" transform="translate(30, 24)">
+    <rect width="740" height="432" rx="16" fill="#1C1613" stroke="#2D241E" stroke-width="1.5" />
+
+    <!-- Terminal Header -->
+    <rect width="740" height="42" rx="16" fill="#251E19" />
+    <path d="M 0 28 L 0 42 L 740 42 L 740 28 Z" fill="#251E19" />
+    <line x1="0" y1="42" x2="740" y2="42" stroke="#382E27" stroke-width="1" />
+    <circle cx="24" cy="21" r="5" fill="#EF4444" opacity="0.8" />
+    <circle cx="40" cy="21" r="5" fill="#F59E0B" opacity="0.8" />
+    <circle cx="56" cy="21" r="5" fill="#10B981" opacity="0.8" />
+    <text x="270" y="26" font-family="monospace" font-size="11" fill="#D4C7BA">dinkar@parul-ai: ~/dsa-core-java/graph</text>
+
+    <!-- Terminal Code & Graph Visual Area -->
+    <g transform="translate(24, 60)" font-family="monospace" font-size="11" fill="#FAF8F5">
+      <!-- Left side: Code snippet (360 wide) -->
+      <g>
+        <text x="0" y="16" fill="#E06A26">// Graph.java — Dijkstra &amp; PriorityQueue</text>
+        <text x="0" y="36" fill="#F59E0B">public class <tspan fill="#FAF8F5">ShortestPathEngine</tspan> {</text>
+        <text x="20" y="56" fill="#8A7B70">// Time: O((V + E) log V) | Space: O(V)</text>
+        <text x="20" y="76" fill="#38BDF8">public int[] <tspan fill="#FAF8F5">dijkstra(int src, List&lt;Edge&gt;[] adj) {</tspan></text>
+        <text x="40" y="96" fill="#FAF8F5">int[] dist = new int[V];</text>
+        <text x="40" y="116" fill="#FAF8F5">Arrays.fill(dist, Integer.MAX_VALUE);</text>
+        <text x="40" y="136" fill="#FAF8F5">PriorityQueue&lt;Node&gt; pq = new PriorityQueue&lt;&gt;();</text>
+        <text x="40" y="156" fill="#FAF8F5">pq.offer(new Node(src, 0));</text>
+        <text x="40" y="176" fill="#E06A26">while <tspan fill="#FAF8F5">(!pq.isEmpty()) {</tspan></text>
+        <text x="60" y="196" fill="#FAF8F5">Node curr = pq.poll();</text>
+        <text x="60" y="216" fill="#10B981">if (curr.dist &gt; dist[curr.id]) continue;</text>
+        <text x="60" y="236" fill="#8A7B70">// Relax neighbor edges optimally</text>
+        <text x="40" y="256" fill="#FAF8F5">}</text>
+        <text x="40" y="276" fill="#38BDF8">return <tspan fill="#FAF8F5">dist;</tspan></text>
+        <text x="20" y="296" fill="#FAF8F5">}</text>
+        <text x="0" y="316" fill="#F59E0B">}</text>
+
+        <rect x="0" y="330" width="340" height="26" rx="6" fill="#251E19" />
+        <text x="10" y="347" fill="#10B981" font-size="10">✓ 250+ Tests Passed (JUnit 5 &bull; 0.042s runtime)</text>
+      </g>
+
+      <!-- Right side: Graph Visual Rendering (320 wide) -->
+      <g transform="translate(370, 0)">
+        <rect x="0" y="0" width="320" height="350" rx="12" fill="#251E19" stroke="#382E27" stroke-width="1" />
+        <text x="16" y="28" font-family="'Outfit', sans-serif" font-size="12" font-weight="bold" fill="#E06A26">GRAPH VISUALIZATION</text>
+        <text x="16" y="44" font-family="monospace" font-size="9" fill="#8A7B70">Adjacency List &bull; Dynamic Min-Heap</text>
+
+        <!-- Graph Nodes & Edges -->
+        <!-- Edges -->
+        <line x1="80" y1="110" x2="160" y2="90" stroke="#E06A26" stroke-width="2" />
+        <line x1="80" y1="110" x2="110" y2="200" stroke="#E06A26" stroke-width="2" />
+        <line x1="160" y1="90" x2="240" y2="130" stroke="#E06A26" stroke-width="2" />
+        <line x1="110" y1="200" x2="210" y2="220" stroke="#E06A26" stroke-width="2" />
+        <line x1="240" y1="130" x2="210" y2="220" stroke="#10B981" stroke-width="3" stroke-dasharray="3" />
+
+        <!-- Node A (Source) -->
+        <circle cx="80" cy="110" r="20" fill="#E06A26" />
+        <text x="74" y="115" font-weight="bold" font-size="12" fill="#FFFFFF">0</text>
+        <text x="64" y="142" font-size="9" fill="#D4C7BA">Src (0)</text>
+
+        <!-- Node B -->
+        <circle cx="160" cy="90" r="18" fill="#345B96" />
+        <text x="156" y="95" font-weight="bold" font-size="11" fill="#FFFFFF">1</text>
+        <text x="146" y="120" font-size="9" fill="#8A7B70">W: 4</text>
+
+        <!-- Node C -->
+        <circle cx="110" cy="200" r="18" fill="#345B96" />
+        <text x="106" y="205" font-weight="bold" font-size="11" fill="#FFFFFF">2</text>
+        <text x="96" y="230" font-size="9" fill="#8A7B70">W: 2</text>
+
+        <!-- Node D -->
+        <circle cx="240" cy="130" r="18" fill="#345B96" />
+        <text x="236" y="135" font-weight="bold" font-size="11" fill="#FFFFFF">3</text>
+        <text x="226" y="158" font-size="9" fill="#8A7B70">W: 5</text>
+
+        <!-- Node E (Target) -->
+        <circle cx="210" cy="220" r="22" fill="#10B981" />
+        <text x="205" y="226" font-weight="bold" font-size="13" fill="#FFFFFF">4</text>
+        <text x="190" y="255" font-size="9" fill="#10B981" font-weight="bold">Dest: Min W=7</text>
+
+        <!-- Stats Bar at bottom of right card -->
+        <g transform="translate(16, 280)">
+          <rect x="0" y="0" width="288" height="52" rx="8" fill="#1C1613" />
+          <text x="12" y="20" font-size="9" fill="#8A7B70">OPTIMAL COMPLEXITY PROOF</text>
+          <text x="12" y="38" font-size="10" fill="#E06A26" font-weight="bold">Time: O(E log V) | Auxiliary Space: O(V)</text>
+        </g>
+      </g>
+    </g>
+
+  </g>
+</svg>

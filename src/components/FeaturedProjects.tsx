@@ -73,6 +73,30 @@ export default function FeaturedProjects() {
                   </span>
                 </div>
 
+                {/* Visual Project Preview Mockup */}
+                {project.imageUrl && (
+                  <div
+                    onClick={() => setActiveModalProject(project)}
+                    className="mb-5 rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] cursor-pointer group/img relative shadow-2xs hover:shadow-md transition-all"
+                    title={`Click to open ${project.title} interactive simulation`}
+                  >
+                    <div className="relative aspect-16/10 w-full overflow-hidden bg-[#FAF8F5]">
+                      <img
+                        src={project.imageUrl}
+                        alt={`${project.title} Preview`}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/img:scale-102"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity flex items-end p-3.5">
+                        <span className="text-white text-[11px] font-heading-sans font-semibold flex items-center gap-1.5 bg-[#1C1613]/90 px-3 py-1 rounded-full backdrop-blur-xs">
+                          <Play className="w-3 h-3 fill-current text-[#E06A26]" />
+                          Launch Live Simulator
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Project Title & Subtitle */}
                 <h3 className="font-heading-sans font-extrabold text-2xl text-[#1C1613] mb-1 group-hover:text-[#E06A26] transition-colors">
                   {project.title}

@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradCampus" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF8F5" />
+      <stop offset="100%" stop-color="#EFF3F8" />
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#244372" />
+      <stop offset="100%" stop-color="#345B96" />
+    </linearGradient>
+    <filter id="softShadowCampus" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#1C1613" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bgGradCampus)" rx="24" />
+
+  <g filter="url(#softShadowCampus)" transform="translate(30, 24)">
+    <rect width="740" height="432" rx="16" fill="#FFFFFF" stroke="#E6DFD5" stroke-width="1.5" />
+
+    <!-- Titlebar -->
+    <rect width="740" height="42" rx="16" fill="#FAF8F5" />
+    <path d="M 0 28 L 0 42 L 740 42 L 740 28 Z" fill="#FAF8F5" />
+    <line x1="0" y1="42" x2="740" y2="42" stroke="#E6DFD5" stroke-width="1" />
+    <circle cx="24" cy="21" r="5" fill="#EF4444" opacity="0.8" />
+    <circle cx="40" cy="21" r="5" fill="#F59E0B" opacity="0.8" />
+    <circle cx="56" cy="21" r="5" fill="#10B981" opacity="0.8" />
+    <text x="280" y="26" font-family="'Outfit', sans-serif" font-size="12" font-weight="bold" fill="#1C1613">CAMPUSPRINT • PARUL UNIVERSITY</text>
+
+    <!-- App Header -->
+    <g transform="translate(24, 60)">
+      <text x="0" y="16" font-family="'Outfit', sans-serif" font-size="16" font-weight="bold" fill="#1C1613">Smart Campus Document &amp; Printing Hub</text>
+      <text x="0" y="32" font-family="sans-serif" font-size="11" fill="#7A6A5E">Eliminating physical queues for 10,000+ university students</text>
+      <line x1="0" y1="44" x2="690" y2="44" stroke="#F4EFEA" stroke-width="1" />
+    </g>
+
+    <!-- Two Columns: Left = Upload & Config, Right = Live Status & Fulfillment -->
+    <g transform="translate(24, 120)">
+      <!-- Left: Order Wizard (330 wide) -->
+      <rect x="0" y="0" width="330" height="270" rx="12" fill="#FAF8F5" stroke="#E6DFD5" stroke-width="1" />
+      <text x="16" y="24" font-family="'Outfit', sans-serif" font-size="13" font-weight="bold" fill="#1C1613">1. Upload Document</text>
+      
+      <!-- Upload dropzone -->
+      <rect x="16" y="36" width="298" height="74" rx="8" fill="#FFFFFF" stroke="#CAD8ED" stroke-width="1.5" stroke-dasharray="4" />
+      <text x="75" y="70" font-family="sans-serif" font-size="11" font-weight="bold" fill="#244372">AI_Lab_Assignment_04.pdf</text>
+      <text x="110" y="86" font-family="monospace" font-size="9" fill="#10B981">✓ Uploaded (2.4 MB)</text>
+
+      <text x="16" y="132" font-family="'Outfit', sans-serif" font-size="13" font-weight="bold" fill="#1C1613">2. Print Configuration</text>
+      
+      <!-- Option pills -->
+      <g transform="translate(16, 142)">
+        <rect x="0" y="0" width="85" height="26" rx="6" fill="#244372" />
+        <text x="16" y="17" font-family="sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">Color Print</text>
+        
+        <rect x="95" y="0" width="85" height="26" rx="6" fill="#FFFFFF" stroke="#E6DFD5" stroke-width="1" />
+        <text x="108" y="17" font-family="sans-serif" font-size="10" fill="#574B42">B&amp;W Mono</text>
+
+        <rect x="190" y="0" width="105" height="26" rx="6" fill="#FFFFFF" stroke="#E6DFD5" stroke-width="1" />
+        <text x="202" y="17" font-family="sans-serif" font-size="10" fill="#574B42">Spiral Binding</text>
+      </g>
+
+      <g transform="translate(16, 182)">
+        <text x="0" y="14" font-family="sans-serif" font-size="10" fill="#7A6A5E">Pages: 24 (Duplex)</text>
+        <text x="0" y="32" font-family="sans-serif" font-size="10" fill="#7A6A5E">Pickup Slot: Slot B (15:00 - 15:30)</text>
+        <text x="220" y="24" font-family="sans-serif" font-size="16" font-weight="bold" fill="#244372">₹ 72.00</text>
+      </g>
+
+      <rect x="16" y="222" width="298" height="32" rx="16" fill="url(#indigoGrad)" />
+      <text x="80" y="242" font-family="sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Confirm &amp; Pay via UPI (Razorpay)</text>
+
+      <!-- Right: Operator Queue Status (340 wide) -->
+      <g transform="translate(350, 0)">
+        <rect x="0" y="0" width="340" height="270" rx="12" fill="#FFFFFF" stroke="#E6DFD5" stroke-width="1" />
+        <text x="16" y="24" font-family="'Outfit', sans-serif" font-size="13" font-weight="bold" fill="#1C1613">Live Shop Operator Queue</text>
+        <text x="220" y="24" font-family="monospace" font-size="10" fill="#10B981" font-weight="bold">● LIVE TRACKING</text>
+        
+        <!-- Queue Item 1 (Ready) -->
+        <g transform="translate(16, 40)">
+          <rect x="0" y="0" width="308" height="54" rx="8" fill="#EDF6F1" stroke="#C5E3D4" stroke-width="1" />
+          <text x="12" y="18" font-family="sans-serif" font-size="10" font-weight="bold" fill="#185038">ORDER #CP-8812 • DINKAR KUMAR</text>
+          <text x="12" y="34" font-family="sans-serif" font-size="9" fill="#2E7D5B">AI Lab Assignment (Color Spiral, 24p)</text>
+          <rect x="220" y="12" width="76" height="20" rx="10" fill="#10B981" />
+          <text x="232" y="26" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF">READY</text>
+        </g>
+
+        <!-- Queue Item 2 (Printing) -->
+        <g transform="translate(16, 104)">
+          <rect x="0" y="0" width="308" height="54" rx="8" fill="#FEF8EC" stroke="#FDE2B5" stroke-width="1" />
+          <text x="12" y="18" font-family="sans-serif" font-size="10" font-weight="bold" fill="#92400E">ORDER #CP-8813 • RAHUL SHARMA</text>
+          <text x="12" y="34" font-family="sans-serif" font-size="9" fill="#B45309">Data Structures Project Report (B&amp;W, 40p)</text>
+          <rect x="220" y="12" width="76" height="20" rx="10" fill="#F59E0B" />
+          <text x="228" y="26" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF">PRINTING</text>
+        </g>
+
+        <!-- Queue Item 3 (In Queue) -->
+        <g transform="translate(16, 168)">
+          <rect x="0" y="0" width="308" height="54" rx="8" fill="#FAF8F5" stroke="#E6DFD5" stroke-width="1" />
+          <text x="12" y="18" font-family="sans-serif" font-size="10" font-weight="bold" fill="#574B42">ORDER #CP-8814 • PRIYA PATEL</text>
+          <text x="12" y="34" font-family="sans-serif" font-size="9" fill="#7A6A5E">Computer Networks Thesis (Color, 80p)</text>
+          <rect x="220" y="12" width="76" height="20" rx="10" fill="#8A7B70" />
+          <text x="232" y="26" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF">QUEUED</text>
+        </g>
+
+        <g transform="translate(16, 238)">
+          <text x="0" y="16" font-family="monospace" font-size="9" fill="#8A7B70">Real-time sync backed by Firebase Firestore</text>
+        </g>
+      </g>
+    </g>
+
+  </g>
+</svg>

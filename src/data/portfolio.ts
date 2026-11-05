@@ -18,6 +18,7 @@ export interface Project {
   technologies: string[];
   githubUrl: string;
   liveUrl?: string;
+  imageUrl?: string;
   demoType: "ecommerce" | "chat" | "campus" | "dsa";
   colorScheme: {
     accent: string;
@@ -113,6 +114,7 @@ The project features token-based authentication (JWT with encrypted bcrypt passw
     ],
     technologies: ["React.js", "Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "Tailwind CSS", "REST APIs"],
     githubUrl: "https://github.com/691Tech",
+    imageUrl: "/images/ecommerce-preview.svg",
     demoType: "ecommerce",
     colorScheme: {
       accent: "#E06A26",
@@ -156,6 +158,7 @@ The platform includes authenticated session verification, dynamic room broadcast
     ],
     technologies: ["React.js", "Node.js", "Socket.io", "Express.js", "MongoDB", "WebSockets", "CSS Modules"],
     githubUrl: "https://github.com/691Tech",
+    imageUrl: "/images/chat-preview.svg",
     demoType: "chat",
     colorScheme: {
       accent: "#2D7354",
@@ -196,6 +199,7 @@ The platform includes authenticated session verification, dynamic room broadcast
     ],
     technologies: ["React.js", "Node.js", "Express", "Firebase", "Razorpay", "Tailwind CSS"],
     githubUrl: "https://github.com/691Tech",
+    imageUrl: "/images/campus-preview.svg",
     demoType: "campus",
     colorScheme: {
       accent: "#2B4A7F",
@@ -235,6 +239,7 @@ The platform includes authenticated session verification, dynamic room broadcast
     ],
     technologies: ["Java", "Data Structures", "Algorithms", "Time Complexity", "Git"],
     githubUrl: "https://github.com/691Tech",
+    imageUrl: "/images/dsa-preview.svg",
     demoType: "dsa",
     colorScheme: {
       accent: "#784212",
