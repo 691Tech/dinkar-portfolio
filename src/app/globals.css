@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --canvas: #FAF8F5;
+    --canvas-subtle: #F4EFEA;
+    --canvas-card: #FFFFFF;
+    --ink: #1C1613;
+    --ink-muted: #574B42;
+    --ink-faint: #8A7B70;
+    --border-warm: #E6DFD5;
+    --border-subtle: #EFE9E1;
+    --accent-terracotta: #E06A26;
+    --accent-terracotta-soft: #FFF3EB;
+    --accent-sage: #2E7D5B;
+    --accent-sage-soft: #EDF6F1;
+    --accent-indigo: #244372;
+    --accent-indigo-soft: #EEF3FA;
+    --accent-gold: #D99527;
+    --accent-gold-soft: #FEF8EC;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--canvas);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-manrope, 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    min-height: 100vh;
+    overflow-x: hidden;
+    selection-background-color: #E06A26;
+    selection-color: #FFFFFF;
+  }
+
+  ::selection {
+    background: #E06A26;
+    color: #FFFFFF;
+  }
+}
+
+/* Custom Typography Utilities */
+.font-display-serif {
+  font-family: var(--font-instrument, 'Instrument Serif', Georgia, serif);
+}
+
+.font-heading-sans {
+  font-family: var(--font-outfit, 'Outfit', 'Manrope', sans-serif);
+}
+
+.font-code-mono {
+  font-family: var(--font-mono, 'JetBrains Mono', 'IBM Plex Mono', monospace);
+}
+
+/* Reference 1: Eyebrow badge styling */
+.eyebrow-badge {
+  font-family: var(--font-outfit, 'Outfit', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Warm subtle noise / grid background pattern */
+.bg-warm-dots {
+  background-image: radial-gradient(rgba(46, 37, 32, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-warm-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(46, 37, 32, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 37, 32, 0.035) 1px, transparent 1px);
+}
+
+/* Card tactile feel */
+.tactile-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E6DFD5;
+  box-shadow: 0 4px 20px -2px rgba(44, 34, 25, 0.04), 0 2px 6px -1px rgba(44, 34, 25, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tactile-card:hover {
+  transform: translateY(-2px);
+  border-color: #D6CBC0;
+  box-shadow: 0 12px 30px -4px rgba(44, 34, 25, 0.08), 0 4px 10px -2px rgba(44, 34, 25, 0.04);
+}
+
+/* Reference 2: Architectural side rail */
+.rail-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Custom interactive buttons */
+.btn-primary-warm {
+  background-color: var(--ink);
+  color: #FAF8F5;
+  font-family: var(--font-outfit, sans-serif);
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 2px 8px rgba(28, 22, 19, 0.15);
+}
+
+.btn-primary-warm:hover {
+  background-color: #E06A26;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(224, 106, 38, 0.25);
+}
+
+.btn-secondary-warm {
+  background-color: #FFFFFF;
+  color: var(--ink);
+  border: 1px solid #D6CBC0;
+  font-family: var(--font-outfit, sans-serif);
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-secondary-warm:hover {
+  background-color: #F7F3EE;
+  border-color: #BFB2A5;
+  color: #E06A26;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFEA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4C7BA;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8A696;
+}
