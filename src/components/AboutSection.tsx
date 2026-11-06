@@ -1,14 +1,16 @@
 "use client";
 
-import React from "react";
-import { User, MapPin, GraduationCap, Sparkles, BookOpen, Heart, ShieldCheck, ArrowUpRight } from "lucide-react";
+import React, { useState } from "react";
+import { User, MapPin, GraduationCap, Sparkles, BookOpen, Heart, ShieldCheck, ArrowUpRight, Box, Monitor } from "lucide-react";
 import { PERSONAL_DETAILS } from "@/data/portfolio";
+import Interactive3DModel from "./Interactive3DModel";
 
 interface AboutSectionProps {
   onOpenProfileModal?: () => void;
 }
 
 export default function AboutSection({ onOpenProfileModal }: AboutSectionProps) {
+  const [visualMode, setVisualMode] = useState<"3d" | "workspace">("3d");
   return (
     <section id="about" className="py-16 sm:py-24 md:py-28 bg-[#FAF8F5] border-b border-[#E6DFD5] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,17 +96,55 @@ export default function AboutSection({ onOpenProfileModal }: AboutSectionProps) 
                 </button>
               )}
 
-              {/* Workspace & Engineering Coordinates Visual */}
-              <div className="mb-6 rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] shadow-2xs">
-                <img
-                  src="/images/about-workspace.svg"
-                  alt="Dinkar Kumar Engineering Workspace"
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
+              {/* Interactive 3D Model & Engineering Coordinates Visual */}
+              <div className="mb-6 space-y-2">
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-[10px] font-code-mono text-[#8A7B70] uppercase tracking-wider">
+                    Visual Presence
+                  </span>
+                  <div className="inline-flex p-0.5 rounded-lg bg-[#FAF8F5] border border-[#E6DFD5] gap-1">
+                    <button
+                      onClick={() => setVisualMode("3d")}
+                      className={`px-2.5 py-1 rounded-md text-[10px] font-heading-sans font-bold transition-all flex items-center gap-1 ${
+                        visualMode === "3d"
+                          ? "bg-[#E06A26] text-white shadow-xs"
+                          : "text-[#574B42] hover:text-[#1C1613]"
+                      }`}
+                    >
+                      <Box className="w-3 h-3" />
+                      <span>Interactive 3D</span>
+                    </button>
+                    <button
+                      onClick={() => setVisualMode("workspace")}
+                      className={`px-2.5 py-1 rounded-md text-[10px] font-heading-sans font-bold transition-all flex items-center gap-1 ${
+                        visualMode === "workspace"
+                          ? "bg-[#1C1613] text-white shadow-xs"
+                          : "text-[#574B42] hover:text-[#1C1613]"
+                      }`}
+                    >
+                      <Monitor className="w-3 h-3" />
+                      <span>Workspace</span>
+                    </button>
+                  </div>
+                </div>
+
+                {visualMode === "3d" ? (
+                  <div className="w-full">
+                    <Interactive3DModel className="w-full h-72 sm:h-80" autoRotate={true} />
+                  </div>
+                ) : (
+                  <div className="rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] shadow-2xs">
+                    <img
+                      src="/images/about-workspace.svg"
+                      alt="Dinkar Kumar Engineering Workspace"
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Bio summary */}
