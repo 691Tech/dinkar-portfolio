@@ -53,7 +53,7 @@ export default function FeaturedProjects() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <div className="eyebrow-badge text-[#E06A26] mb-3 justify-center">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E06A26]"></span>
             <span>FEATURED PROJECTS &amp; CODE CRAFT</span>
@@ -69,6 +69,26 @@ export default function FeaturedProjects() {
             Every project showcases deliberate architectural choices: robust full-stack REST APIs, 
             low-latency WebSockets, machine learning autoencoders, and optimized data structures.
           </p>
+        </div>
+
+        {/* Dynamic Engineering Stats Pill Banner */}
+        <div className="max-w-4xl mx-auto mb-8 p-3 sm:p-4 rounded-2xl bg-white border border-[#EAE3D8] shadow-2xs grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div className="flex flex-col">
+            <span className="font-heading-sans font-extrabold text-lg sm:text-xl text-[#1C1613]">30+</span>
+            <span className="text-[10px] sm:text-[11px] font-code-mono text-[#8A7B70] uppercase">Curated Repositories</span>
+          </div>
+          <div className="flex flex-col border-l border-[#F4EFEA]">
+            <span className="font-heading-sans font-extrabold text-lg sm:text-xl text-[#E06A26]">6 Flagship</span>
+            <span className="text-[10px] sm:text-[11px] font-code-mono text-[#8A7B70] uppercase">Interactive Sandboxes</span>
+          </div>
+          <div className="flex flex-col border-l border-[#F4EFEA]">
+            <span className="font-heading-sans font-extrabold text-lg sm:text-xl text-[#2E7D5B]">250+</span>
+            <span className="text-[10px] sm:text-[11px] font-code-mono text-[#8A7B70] uppercase">DSA Solved in Java</span>
+          </div>
+          <div className="flex flex-col border-l border-[#F4EFEA]">
+            <span className="font-heading-sans font-extrabold text-lg sm:text-xl text-[#244372]">94%</span>
+            <span className="text-[10px] sm:text-[11px] font-code-mono text-[#8A7B70] uppercase">CBSE Class XI Score</span>
+          </div>
         </div>
 
         {/* Live Search & Filter Bar */}

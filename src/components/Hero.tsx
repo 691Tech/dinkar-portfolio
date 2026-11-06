@@ -1,8 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { ArrowDown, ArrowUpRight, FileText, Code2, Terminal, Sparkles, Cpu, Layers, Database, Activity, CheckCircle2 } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { 
+  ArrowDown, ArrowUpRight, FileText, Code2, Terminal, Sparkles, 
+  Cpu, Layers, Database, Activity, CheckCircle2, Copy, Check, Wifi
+} from "lucide-react";
 import { PERSONAL_DETAILS } from "@/data/portfolio";
+import { sounds } from "@/lib/sound";
+import { useToast } from "@/components/Toast";
 
 interface HeroProps {
   onOpenResume: () => void;
@@ -11,6 +16,26 @@ interface HeroProps {
 
 export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
   const [activeTab, setActiveTab] = useState<"telemetry" | "stack" | "git">("telemetry");
+  const [copiedClone, setCopiedClone] = useState(false);
+  const [livePing, setLivePing] = useState(24);
+  const { showToast } = useToast();
+
+  // Simulate real-time dynamic WebSocket/Network latency
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const jitter = Math.floor(22 + Math.random() * 14);
+      setLivePing(jitter);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleCopyClone = () => {
+    sounds.playClick();
+    navigator.clipboard.writeText("git clone https://github.com/691Tech/dinkar-portfolio.git");
+    setCopiedClone(true);
+    showToast("Git clone command copied to clipboard!");
+    setTimeout(() => setCopiedClone(false), 2000);
+  };
 
   return (
     <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24 border-b border-[#E6DFD5] bg-warm-dots">
@@ -24,16 +49,24 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
           {/* Left Column: Editorial Headline & Persona (7 cols) */}
           <div className="lg:col-span-7 flex flex-col items-start">
             
-            {/* Architectural Eyebrow Badge (Inspired by Ref 1 + 2) */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E0D7CC] text-xs font-heading-sans font-semibold text-[#574B42] mb-6 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#E06A26] animate-pulse"></span>
-              <span className="tracking-wider uppercase text-[11px] text-[#2D241E]">
-                Dinkar Kumar • AI & Software Engineering
-              </span>
-              <span className="text-[#C4B7AA]">•</span>
-              <span className="text-[11px] text-[#7A6A5E] font-medium hidden sm:inline">
-                Parul University &apos;29
-              </span>
+            {/* Architectural Eyebrow Badge & Telemetry */}
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E0D7CC] text-xs font-heading-sans font-semibold text-[#574B42] shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-[#E06A26] animate-pulse"></span>
+                <span className="tracking-wider uppercase text-[11px] text-[#2D241E]">
+                  Dinkar Kumar • AI &amp; Software Engineering
+                </span>
+                <span className="text-[#C4B7AA]">•</span>
+                <span className="text-[11px] text-[#7A6A5E] font-medium hidden sm:inline">
+                  Parul University &apos;29
+                </span>
+              </div>
+
+              {/* Live Latency Ping */}
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-code-mono font-bold text-emerald-800 shadow-2xs">
+                <Wifi className="w-3 h-3 text-emerald-600 animate-pulse" />
+                <span>{livePing}ms Ping</span>
+              </div>
             </div>
 
             {/* Main Punchy Editorial Headline (Ref 1 Typography + Ref 2 High Impact) */}
@@ -53,9 +86,10 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 mb-10 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-3.5 mb-6 w-full sm:w-auto">
               <a
                 href="#projects"
+                onClick={() => sounds.playClick()}
                 className="btn-primary-warm w-full sm:w-auto justify-center"
               >
                 <span>Explore Featured Projects</span>
@@ -63,7 +97,10 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
               </a>
 
               <button
-                onClick={onOpenResume}
+                onClick={() => {
+                  sounds.playClick();
+                  onOpenResume();
+                }}
                 className="btn-secondary-warm w-full sm:w-auto justify-center"
               >
                 <FileText className="w-4 h-4 text-[#E06A26]" />
@@ -71,11 +108,32 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
               </button>
 
               <button
-                onClick={onOpenContact}
+                onClick={() => {
+                  sounds.playClick();
+                  onOpenContact();
+                }}
                 className="px-5 py-3 rounded-full text-xs font-heading-sans font-semibold text-[#574B42] hover:text-[#1C1613] hover:bg-[#F4EFEA] transition-colors w-full sm:w-auto justify-center inline-flex items-center gap-1.5"
               >
                 <span>Contact Dinkar</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Quick Git Clone Command Pill */}
+            <div className="mb-8 w-full max-w-md">
+              <button
+                onClick={handleCopyClone}
+                className="w-full p-2.5 rounded-2xl bg-white border border-[#EAE3D8] hover:border-[#D6CBC0] transition-colors flex items-center justify-between text-xs font-code-mono text-[#574B42] shadow-2xs group"
+                title="Click to copy git clone command"
+              >
+                <div className="flex items-center gap-2 truncate">
+                  <Terminal className="w-3.5 h-3.5 text-[#E06A26] shrink-0" />
+                  <span className="truncate">git clone https://github.com/691Tech/dinkar-portfolio.git</span>
+                </div>
+                <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#FAF8F5] border border-[#E0D7CC] text-[#1C1613] shrink-0 flex items-center gap-1 group-hover:bg-[#1C1613] group-hover:text-white transition-colors">
+                  {copiedClone ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  <span>{copiedClone ? "Copied" : "Copy"}</span>
+                </span>
               </button>
             </div>
 
@@ -89,7 +147,7 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
               <div className="flex flex-col">
                 <span className="font-code-mono text-xs text-[#8A7B70] uppercase tracking-wider">Core Focus</span>
                 <span className="font-heading-sans font-bold text-sm text-[#1C1613] mt-0.5">Full Stack + AI</span>
-                <span className="text-[11px] text-[#7A6A5E]">React & Node.js</span>
+                <span className="text-[11px] text-[#7A6A5E]">React &amp; Node.js</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-code-mono text-xs text-[#8A7B70] uppercase tracking-wider">Academics</span>
@@ -134,7 +192,10 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
               {/* Sub-Tabs for Interactive Exploration */}
               <div className="flex border-b border-[#EFE9E1] bg-[#FDFBF7] text-xs font-heading-sans font-medium">
                 <button
-                  onClick={() => setActiveTab("telemetry")}
+                  onClick={() => {
+                    sounds.playClick();
+                    setActiveTab("telemetry");
+                  }}
                   className={`flex-1 py-2 px-3 text-center border-r border-[#EFE9E1] transition-colors flex items-center justify-center gap-1.5 ${
                     activeTab === "telemetry"
                       ? "bg-white text-[#E06A26] font-semibold border-b-2 border-b-[#E06A26]"
@@ -145,7 +206,10 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
                   <span>Telemetry</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab("stack")}
+                  onClick={() => {
+                    sounds.playClick();
+                    setActiveTab("stack");
+                  }}
                   className={`flex-1 py-2 px-3 text-center border-r border-[#EFE9E1] transition-colors flex items-center justify-center gap-1.5 ${
                     activeTab === "stack"
                       ? "bg-white text-[#E06A26] font-semibold border-b-2 border-b-[#E06A26]"
@@ -156,7 +220,10 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
                   <span>Stack Radar</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab("git")}
+                  onClick={() => {
+                    sounds.playClick();
+                    setActiveTab("git");
+                  }}
                   className={`flex-1 py-2 px-3 text-center transition-colors flex items-center justify-center gap-1.5 ${
                     activeTab === "git"
                       ? "bg-white text-[#E06A26] font-semibold border-b-2 border-b-[#E06A26]"
@@ -188,7 +255,7 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
                         WebSocket Latency
                       </span>
                       <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[11px]">
-                        &lt; 42ms (Socket.io)
+                        &lt; {livePing}ms (Socket.io)
                       </span>
                     </div>
 
@@ -287,9 +354,9 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
               </div>
 
               {/* Bottom Card Footer */}
-              <div className="bg-[#FAF8F5] border-t border-[#E6DFD5] px-4 py-2.5 flex items-center justify-between text-[11px] text-[#7A6A5E]">
+              <div className="bg-[#FAF8F5] border-t border-[#EAE3D8] px-4 py-2.5 flex items-center justify-between text-[11px] text-[#7A6A5E]">
                 <span>Vadodara, Gujarat (IST)</span>
-                <span className="font-medium text-[#1C1613]">Portfolio Engine v2.0</span>
+                <span className="font-medium text-[#1C1613]">Portfolio Engine v2.4</span>
               </div>
 
             </div>

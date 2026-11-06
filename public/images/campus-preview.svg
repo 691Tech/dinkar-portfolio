@@ -34,7 +34,7 @@
       <line x1="0" y1="44" x2="690" y2="44" stroke="#F4EFEA" stroke-width="1" />
     </g>
 
-    <!-- Two Columns: Left = Upload & Config, Right = Live Status & Fulfillment -->
+    <!-- Two Columns: Left = Upload &amp; Config, Right = Live Status &amp; Fulfillment -->
     <g transform="translate(24, 120)">
       <!-- Left: Order Wizard (330 wide) -->
       <rect x="0" y="0" width="330" height="270" rx="12" fill="#FAF8F5" stroke="#E6DFD5" stroke-width="1" />

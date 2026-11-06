@@ -2,20 +2,57 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { FileText, Shield, Menu, X, ArrowUpRight, Terminal, Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/Icons";
-import { PERSONAL_DETAILS } from "@/data/portfolio";
+import { 
+  FileText, Shield, Menu, X, ArrowUpRight, Search, Volume2, 
+  VolumeX, Share2, Clock, Sparkles
+} from "lucide-react";
+import { sounds } from "@/lib/sound";
 
 interface NavbarProps {
   onOpenAdmin: () => void;
   onOpenResume: () => void;
   onOpenContact: () => void;
+  onOpenCommandPalette: () => void;
+  onOpenShareModal: () => void;
+  soundEnabled: boolean;
+  onToggleSound: () => void;
 }
 
-export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: NavbarProps) {
+export default function Navbar({
+  onOpenAdmin,
+  onOpenResume,
+  onOpenContact,
+  onOpenCommandPalette,
+  onOpenShareModal,
+  soundEnabled,
+  onToggleSound,
+}: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [istTime, setIstTime] = useState("");
+
+  // Live IST Clock (Vadodara Time)
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true
+        });
+        setIstTime(timeStr);
+      } catch {
+        setIstTime("IST Active");
+      }
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -74,6 +111,7 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
           href="/"
           className="flex items-center gap-3 group focus:outline-hidden"
           onClick={() => {
+            sounds.playClick();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >
@@ -87,8 +125,12 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
                 691Tech
               </span>
             </span>
-            <span className="text-[11px] text-[#8A7B70] font-sans">
-              AI Engineer & Full Stack Dev
+            <span className="text-[11px] text-[#8A7B70] font-sans flex items-center gap-1">
+              <span>AI Engineer</span>
+              <span className="text-[#C4B7AA]">&bull;</span>
+              <span className="text-emerald-700 font-code-mono text-[10px] hidden sm:inline">
+                {istTime} (Vadodara)
+              </span>
             </span>
           </div>
         </Link>
@@ -101,6 +143,7 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
               <a
                 key={link.name}
                 href={link.href}
+                onClick={() => sounds.playClick()}
                 className={`relative px-3.5 py-1.5 text-xs font-heading-sans font-medium rounded-full transition-all duration-200 flex items-center gap-1.5 ${
                   isActive
                     ? "bg-[#FFFFFF] text-[#1C1613] shadow-xs font-semibold"
@@ -116,12 +159,61 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
           })}
         </nav>
 
-        {/* Right Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Right Action Tools & Buttons */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Quick Command Palette Trigger (Ctrl+K) */}
+          <button
+            onClick={() => {
+              sounds.playClick();
+              onOpenCommandPalette();
+            }}
+            className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E6DFD5] hover:border-[#D6CBC0] text-xs font-heading-sans text-[#574B42] hover:text-[#1C1613] transition-colors shadow-2xs"
+            title="Search & Navigate (Ctrl+K / Cmd+K)"
+          >
+            <Search className="w-3.5 h-3.5 text-[#E06A26]" />
+            <span className="text-[11px] hidden md:inline">Quick Jump</span>
+            <kbd className="px-1.5 py-0.2 rounded text-[10px] font-code-mono bg-[#FAF8F5] border border-[#E0D7CC] text-[#7A6A5E]">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* Sound Toggle Button */}
+          <button
+            onClick={() => {
+              sounds.playClick();
+              onToggleSound();
+            }}
+            className={`p-2 rounded-full border transition-colors ${
+              soundEnabled
+                ? "bg-[#FFF3EB] border-[#FAD8C3] text-[#E06A26]"
+                : "bg-white border-[#E6DFD5] text-[#8A7B70] hover:text-[#1C1613]"
+            }`}
+            title={soundEnabled ? "Mute tactile sound effects" : "Enable tactile sound effects"}
+            aria-label="Toggle Sound Effects"
+          >
+            {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          </button>
+
+          {/* Share Portfolio Button */}
+          <button
+            onClick={() => {
+              sounds.playClick();
+              onOpenShareModal();
+            }}
+            className="p-2 rounded-full bg-white border border-[#E6DFD5] text-[#574B42] hover:text-[#1C1613] hover:border-[#D6CBC0] transition-colors"
+            title="Share Portfolio / QR Code"
+            aria-label="Share Portfolio"
+          >
+            <Share2 className="w-4 h-4" />
+          </button>
+
           {/* Resume PDF Button */}
           <button
-            onClick={onOpenResume}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-heading-sans font-semibold rounded-full bg-[#FFFFFF] border border-[#D6CBC0] text-[#1C1613] hover:border-[#E06A26] hover:text-[#E06A26] transition-colors shadow-2xs"
+            onClick={() => {
+              sounds.playClick();
+              onOpenResume();
+            }}
+            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-heading-sans font-semibold rounded-full bg-[#FFFFFF] border border-[#D6CBC0] text-[#1C1613] hover:border-[#E06A26] hover:text-[#E06A26] transition-colors shadow-2xs"
             title="View & Download Dinkar Kumar's Official Resume PDF"
           >
             <FileText className="w-3.5 h-3.5 text-[#E06A26]" />
@@ -130,18 +222,24 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
 
           {/* Contact Button */}
           <button
-            onClick={onOpenContact}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-heading-sans font-semibold rounded-full bg-[#1C1613] text-[#FAF8F5] hover:bg-[#E06A26] transition-all shadow-xs"
+            onClick={() => {
+              sounds.playClick();
+              onOpenContact();
+            }}
+            className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 text-xs font-heading-sans font-semibold rounded-full bg-[#1C1613] text-[#FAF8F5] hover:bg-[#E06A26] transition-all shadow-xs"
           >
-            <span>Get in Touch</span>
+            <span>Contact</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
 
           {/* Admin Shield Button */}
           <button
-            onClick={onOpenAdmin}
+            onClick={() => {
+              sounds.playClick();
+              onOpenAdmin();
+            }}
             className="p-2 text-[#8A7B70] hover:text-[#1C1613] hover:bg-[#F4EFEA] rounded-full transition-colors border border-transparent hover:border-[#E6DFD5]"
-            title="Administrator Portal (Firebase & Inquiries)"
+            title="Administrator Portal"
             aria-label="Admin Portal"
           >
             <Shield className="w-4 h-4" />
@@ -149,7 +247,10 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => {
+              sounds.playClick();
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
             className="lg:hidden p-2 text-[#1C1613] hover:bg-[#F4EFEA] rounded-lg transition-colors border border-[#E6DFD5]"
             aria-label="Toggle menu"
           >
@@ -166,7 +267,10 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  sounds.playClick();
+                  setMobileMenuOpen(false);
+                }}
                 className="px-3 py-2.5 rounded-lg text-sm font-heading-sans font-medium text-[#1C1613] hover:bg-[#F4EFEA] flex items-center justify-between"
               >
                 <span>{link.name}</span>
@@ -179,17 +283,29 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
+                onOpenCommandPalette();
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white border border-[#E6DFD5] text-xs font-heading-sans font-semibold text-[#1C1613]"
+            >
+              <Search className="w-4 h-4 text-[#E06A26]" />
+              <span>Open Command Palette (Search)</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
                 onOpenResume();
               }}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white border border-[#D6CBC0] text-xs font-heading-sans font-semibold text-[#1C1613]"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white border border-[#D6CBC0] text-xs font-heading-sans font-semibold text-[#1C1613]"
             >
               <FileText className="w-4 h-4 text-[#E06A26]" />
-              <span>View & Download Official Resume PDF</span>
+              <span>Official Resume PDF</span>
             </button>
+
             <div className="flex items-center justify-between text-xs text-[#8A7B70] pt-2 px-1">
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                Vadodara, Gujarat (IST)
+                <Clock className="w-3 h-3 text-[#E06A26]" />
+                {istTime} (Vadodara, IN)
               </span>
               <a
                 href="https://github.com/691Tech"
@@ -197,7 +313,7 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
                 rel="noreferrer"
                 className="text-[#E06A26] font-code-mono font-medium hover:underline"
               >
-                github.com/691Tech
+                @691Tech
               </a>
             </div>
           </div>

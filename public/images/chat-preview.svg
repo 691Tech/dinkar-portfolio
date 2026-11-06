@@ -30,7 +30,7 @@
     
     <text x="310" y="26" font-family="'Outfit', sans-serif" font-size="12" font-weight="bold" fill="#1C1613">PULSE CHAT // WEBSOCKET ENGINE</text>
 
-    <!-- App Body: Left Sidebar (Channels & Users) -->
+    <!-- App Body: Left Sidebar (Channels &amp; Users) -->
     <rect x="0" y="42" width="220" height="390" fill="#FAF8F5" />
     <line x1="220" y1="42" x2="220" y2="432" stroke="#E6DFD5" stroke-width="1" />
 
