@@ -26,6 +26,7 @@
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -34,8 +35,7 @@
     font-family: var(--font-manrope, 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
     min-height: 100vh;
     overflow-x: hidden;
-    selection-background-color: #E06A26;
-    selection-color: #FFFFFF;
+    -webkit-tap-highlight-color: transparent;
   }
 
   ::selection {
@@ -57,7 +57,7 @@
   font-family: var(--font-mono, 'JetBrains Mono', 'IBM Plex Mono', monospace);
 }
 
-/* Reference 1: Eyebrow badge styling */
+/* Eyebrow badge styling */
 .eyebrow-badge {
   font-family: var(--font-outfit, 'Outfit', sans-serif);
   font-size: 0.72rem;
@@ -69,7 +69,7 @@
   gap: 0.5rem;
 }
 
-/* Warm subtle noise / grid background pattern */
+/* Warm subtle background pattern with hardware acceleration */
 .bg-warm-dots {
   background-image: radial-gradient(rgba(46, 37, 32, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
@@ -82,21 +82,24 @@
     linear-gradient(to bottom, rgba(46, 37, 32, 0.035) 1px, transparent 1px);
 }
 
-/* Card tactile feel */
+/* Tactile Card with Hardware Acceleration (Prevents Lag & Stutter) */
 .tactile-card {
   background-color: #FFFFFF;
   border: 1px solid #E6DFD5;
-  box-shadow: 0 4px 20px -2px rgba(44, 34, 25, 0.04), 0 2px 6px -1px rgba(44, 34, 25, 0.02);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 12px -2px rgba(44, 34, 25, 0.04), 0 1px 4px -1px rgba(44, 34, 25, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
 }
 
 .tactile-card:hover {
-  transform: translateY(-2px);
+  transform: translate3d(0, -3px, 0);
   border-color: #D6CBC0;
-  box-shadow: 0 12px 30px -4px rgba(44, 34, 25, 0.08), 0 4px 10px -2px rgba(44, 34, 25, 0.04);
+  box-shadow: 0 10px 25px -4px rgba(44, 34, 25, 0.08), 0 4px 10px -2px rgba(44, 34, 25, 0.03);
 }
 
-/* Reference 2: Architectural side rail */
+/* Side rail label */
 .rail-label {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -107,7 +110,7 @@
   color: var(--ink-faint);
 }
 
-/* Custom interactive buttons */
+/* High-Performance Smooth Interactive Buttons */
 .btn-primary-warm {
   background-color: var(--ink);
   color: #FAF8F5;
@@ -115,18 +118,24 @@
   font-weight: 600;
   padding: 0.75rem 1.75rem;
   border-radius: 9999px;
-  transition: all 0.25s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  box-shadow: 0 2px 8px rgba(28, 22, 19, 0.15);
+  box-shadow: 0 2px 8px rgba(28, 22, 19, 0.12);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .btn-primary-warm:hover {
   background-color: #E06A26;
   color: #FFFFFF;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(224, 106, 38, 0.25);
+  transform: translate3d(0, -1px, 0);
+  box-shadow: 0 6px 16px rgba(224, 106, 38, 0.22);
+}
+
+.btn-primary-warm:active {
+  transform: translate3d(0, 1px, 0);
 }
 
 .btn-secondary-warm {
@@ -137,33 +146,66 @@
   font-weight: 600;
   padding: 0.75rem 1.75rem;
   border-radius: 9999px;
-  transition: all 0.25s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  transform: translate3d(0, 0, 0);
 }
 
 .btn-secondary-warm:hover {
   background-color: #F7F3EE;
   border-color: #BFB2A5;
   color: #E06A26;
+  transform: translate3d(0, -1px, 0);
 }
 
-/* Custom scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.btn-secondary-warm:active {
+  transform: translate3d(0, 1px, 0);
 }
 
-::-webkit-scrollbar-track {
-  background: #F4EFEA;
+/* Utility to hide scrollbars while maintaining touch scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #D4C7BA;
-  border-radius: 4px;
+/* Custom desktop scrollbar */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #FAF8F5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #D8CCC0;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #BFAEA0;
+  }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #B8A696;
+/* Animations inspired by animaster */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-fadeInSlide {
+  animation: fadeInSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

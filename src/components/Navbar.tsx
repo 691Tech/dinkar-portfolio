@@ -18,20 +18,32 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: Nav
   const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
 
-      const sections = ["about", "projects", "skills", "education", "github", "faq", "contact"];
-      const current = sections.find((sec) => {
-        const el = document.getElementById(sec);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          return rect.top <= 180 && rect.bottom >= 180;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
-      else if (window.scrollY < 200) setActiveSection("hero");
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+
+          const sections = ["about", "projects", "skills", "education", "github", "faq", "contact"];
+          const scrollPos = window.scrollY + 200;
+          
+          for (const sec of sections) {
+            const el = document.getElementById(sec);
+            if (el) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPos >= top && scrollPos < top + height) {
+                setActiveSection(sec);
+                break;
+              }
+            }
+          }
+          if (window.scrollY < 200) setActiveSection("hero");
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

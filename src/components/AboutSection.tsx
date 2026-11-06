@@ -59,6 +59,16 @@ export default function AboutSection() {
                 </div>
               </div>
 
+              {/* Workspace & Engineering Coordinates Visual */}
+              <div className="mb-6 rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] shadow-2xs">
+                <img
+                  src="/images/about-workspace.svg"
+                  alt="Dinkar Kumar Engineering Workspace"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
+
               {/* Bio summary */}
               <div className="space-y-4 text-xs sm:text-sm text-[#574B42] leading-relaxed border-t border-[#F4EFEA] pt-5">
                 <p>

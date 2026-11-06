@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="netBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF8F5" />
+      <stop offset="100%" stop-color="#F2ECE4" />
+    </linearGradient>
+    <filter id="softShadowNet" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#1C1613" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#netBgGrad)" rx="24" />
+
+  <g filter="url(#softShadowNet)" transform="translate(30, 24)">
+    <rect width="740" height="432" rx="16" fill="#1C1613" stroke="#2D241E" stroke-width="1.5" />
+
+    <!-- Titlebar -->
+    <rect width="740" height="42" rx="16" fill="#251E19" />
+    <path d="M 0 28 L 0 42 L 740 42 L 740 28 Z" fill="#251E19" />
+    <line x1="0" y1="42" x2="740" y2="42" stroke="#382E27" stroke-width="1" />
+    <circle cx="24" cy="21" r="5" fill="#EF4444" opacity="0.8" />
+    <circle cx="40" cy="21" r="5" fill="#F59E0B" opacity="0.8" />
+    <circle cx="56" cy="21" r="5" fill="#10B981" opacity="0.8" />
+    <text x="250" y="26" font-family="monospace" font-size="11" fill="#D4C7BA">net-sniffer-core // JAVA RAW SOCKET ANALYZER</text>
+
+    <!-- Table of captured packets -->
+    <g transform="translate(24, 60)" font-family="monospace" font-size="10">
+      <!-- Table Header -->
+      <rect x="0" y="0" width="692" height="28" rx="6" fill="#251E19" />
+      <text x="14" y="18" fill="#E06A26" font-weight="bold">NO.</text>
+      <text x="50" y="18" fill="#E06A26" font-weight="bold">TIME</text>
+      <text x="120" y="18" fill="#E06A26" font-weight="bold">SOURCE IP</text>
+      <text x="260" y="18" fill="#E06A26" font-weight="bold">DESTINATION IP</text>
+      <text x="400" y="18" fill="#E06A26" font-weight="bold">PROTO</text>
+      <text x="470" y="18" fill="#E06A26" font-weight="bold">LENGTH</text>
+      <text x="540" y="18" fill="#E06A26" font-weight="bold">INFO</text>
+
+      <!-- Row 1 -->
+      <rect x="0" y="32" width="692" height="32" rx="6" fill="#1C1613" />
+      <text x="14" y="52" fill="#8A7B70">001</text>
+      <text x="50" y="52" fill="#FAF8F5">0.0000</text>
+      <text x="120" y="52" fill="#38BDF8">192.168.1.104</text>
+      <text x="260" y="52" fill="#F59E0B">142.250.190.46</text>
+      <text x="400" y="52" fill="#10B981" font-weight="bold">TLSv1.3</text>
+      <text x="470" y="52" fill="#FAF8F5">517 B</text>
+      <text x="540" y="52" fill="#D4C7BA">Application Data [Client Hello]</text>
+
+      <!-- Row 2 -->
+      <rect x="0" y="68" width="692" height="32" rx="6" fill="#251E19" />
+      <text x="14" y="88" fill="#8A7B70">002</text>
+      <text x="50" y="88" fill="#FAF8F5">0.0042</text>
+      <text x="120" y="88" fill="#F59E0B">142.250.190.46</text>
+      <text x="260" y="88" fill="#38BDF8">192.168.1.104</text>
+      <text x="400" y="88" fill="#10B981" font-weight="bold">TCP</text>
+      <text x="470" y="88" fill="#FAF8F5">66 B</text>
+      <text x="540" y="88" fill="#D4C7BA">443 → 58214 [ACK] Seq=1 Ack=463</text>
+
+      <!-- Row 3 -->
+      <rect x="0" y="104" width="692" height="32" rx="6" fill="#1C1613" />
+      <text x="14" y="124" fill="#8A7B70">003</text>
+      <text x="50" y="124" fill="#FAF8F5">0.0125</text>
+      <text x="120" y="124" fill="#38BDF8">192.168.1.104</text>
+      <text x="260" y="124" fill="#F59E0B">35.244.180.12</text>
+      <text x="400" y="124" fill="#E06A26" font-weight="bold">WS (101)</text>
+      <text x="470" y="124" fill="#FAF8F5">128 B</text>
+      <text x="540" y="124" fill="#FAF8F5">WebSocket Handshake [Upgrade: websocket]</text>
+
+      <!-- Row 4 -->
+      <rect x="0" y="140" width="692" height="32" rx="6" fill="#251E19" />
+      <text x="14" y="160" fill="#8A7B70">004</text>
+      <text x="50" y="160" fill="#FAF8F5">0.0148</text>
+      <text x="120" y="160" fill="#38BDF8">192.168.1.104</text>
+      <text x="260" y="160" fill="#8A7B70">8.8.8.8</text>
+      <text x="400" y="160" fill="#38BDF8" font-weight="bold">DNS</text>
+      <text x="470" y="160" fill="#FAF8F5">78 B</text>
+      <text x="540" y="160" fill="#D4C7BA">Standard query 0x8a1b A api.dinkar.dev</text>
+
+      <!-- Packet Deep Inspection Box -->
+      <g transform="translate(0, 186)">
+        <rect x="0" y="0" width="692" height="150" rx="8" fill="#251E19" stroke="#382E27" stroke-width="1" />
+        <text x="16" y="24" font-family="'Outfit', sans-serif" font-size="12" font-weight="bold" fill="#E06A26">Packet Byte Breakdown &amp; Decoded Header</text>
+        
+        <text x="16" y="46" font-size="9" fill="#8A7B70">Frame 3: 128 bytes on wire (1024 bits), 128 bytes captured</text>
+        <text x="16" y="62" font-size="9" fill="#FAF8F5">&gt; Ethernet II, Src: 00:1a:2b:3c:4d:5e, Dst: e0:cb:ee:aa:11:22</text>
+        <text x="16" y="78" font-size="9" fill="#FAF8F5">&gt; Internet Protocol Version 4, Src: 192.168.1.104, Dst: 35.244.180.12</text>
+        <text x="16" y="94" font-size="9" fill="#FAF8F5">&gt; Transmission Control Protocol, Src Port: 58214, Dst Port: 443</text>
+        <text x="16" y="110" font-size="9" fill="#10B981">&gt; WebSocket Protocol: Text Frame, Fin: True, Masked: True, Opcode: 1</text>
+        
+        <g transform="translate(16, 126)">
+          <rect x="0" y="0" width="660" height="16" rx="4" fill="#1C1613" />
+          <text x="8" y="12" font-size="8" fill="#D4C7BA">RAW HEX: 81 85 3a 4f 1c 7b 5e 2b 78 17 55 4f 3a 21 00 f4 e1 9a cc 33 ... [Payload: "chat_event_ack"]</text>
+        </g>
+      </g>
+    </g>
+
+  </g>
+</svg>

@@ -14,6 +14,7 @@ import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import AdminPortal from "@/components/AdminPortal";
 import ResumeModal from "@/components/ResumeModal";
+import MouseSpotlight from "@/components/MouseSpotlight";
 
 export default function Home() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
@@ -27,7 +28,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1C1613]">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1C1613] relative selection:bg-[#E06A26] selection:text-white">
+      {/* Smooth Mouse Pointer Spotlight */}
+      <MouseSpotlight />
+
       {/* Top Announcement Bar */}
       <AnnouncementBar onOpenContact={handleOpenContact} />
 

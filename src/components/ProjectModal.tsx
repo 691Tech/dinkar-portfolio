@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, ExternalLink, Check, ShoppingBag, Send, Plus, Trash2, ArrowRight, ShieldCheck, Terminal, Cpu } from "lucide-react";
-import { GithubIcon } from "@/components/Icons";
+import { X, ExternalLink, Check, ShoppingBag, Send, Plus, Trash2, ArrowRight, ShieldCheck, Terminal, Cpu, Play, AlertTriangle, Activity } from "lucide-react";
 import { Project } from "@/data/portfolio";
+import { GithubIcon } from "@/components/Icons";
 import confetti from "canvas-confetti";
 
 interface ProjectModalProps {
@@ -19,7 +19,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     { id: 1, name: "Mechanical Gaming Keyboard (Cherry MX)", price: 79, qty: 1 }
   ]);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const demoProducts = [
     { id: 1, name: "Mechanical Keyboard (Cherry MX)", price: 79, category: "hardware", badge: "Best Seller" },
@@ -73,7 +72,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     setMessages((prev) => [...prev, newMsg]);
     setInputMsg("");
 
-    // Simulate Dinkar auto-reply if recruiter typed
     if (currentUser === "Recruiter") {
       setIsTyping(true);
       setTimeout(() => {
@@ -90,36 +88,62 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     }
   };
 
+  // AI Fraud Anomaly Demo State
+  const [testTransactions, setTestTransactions] = useState([
+    { id: "TXN-701", amount: "$38.00", category: "Grocery (Local)", mse: 0.007, isFraud: false },
+    { id: "TXN-702", amount: "$14.50", category: "Coffee Shop (Vadodara)", mse: 0.004, isFraud: false },
+    { id: "TXN-703", amount: "$2,450.00", category: "High-Risk Offshore Merchant", mse: 0.142, isFraud: true }
+  ]);
+  const [analyzingTxn, setAnalyzingTxn] = useState(false);
+  const [lastAnalysis, setLastAnalysis] = useState<string | null>(null);
+
+  const testNewTransaction = (simulateFraud: boolean) => {
+    setAnalyzingTxn(true);
+    setLastAnalysis(null);
+    setTimeout(() => {
+      setAnalyzingTxn(false);
+      const newTxn = {
+        id: "TXN-" + Math.floor(100 + Math.random() * 900),
+        amount: simulateFraud ? `$${(1200 + Math.random() * 3000).toFixed(2)}` : `$${(15 + Math.random() * 60).toFixed(2)}`,
+        category: simulateFraud ? "Crypto Exchange Transfer (Overseas IP)" : "Campus Cafeteria",
+        mse: simulateFraud ? Number((0.08 + Math.random() * 0.12).toFixed(3)) : Number((0.002 + Math.random() * 0.015).toFixed(3)),
+        isFraud: simulateFraud
+      };
+      setTestTransactions((prev) => [newTxn, ...prev.slice(0, 4)]);
+      setLastAnalysis(simulateFraud ? "ANOMALY BLOCKED: High MSE Reconstruction Error" : "VERIFIED: Transaction conforms to baseline pattern");
+    }, 400);
+  };
+
   if (!project) return null;
 
   const cartTotal = cart.reduce((acc, curr) => acc + curr.price * curr.qty, 0);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 md:p-6 animate-fadeIn">
       <div
-        className="bg-[#FAF8F5] rounded-3xl max-w-4xl w-full border border-[#E6DFD5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="bg-[#FAF8F5] rounded-3xl max-w-4xl w-full border border-[#E6DFD5] shadow-2xl overflow-hidden flex flex-col max-h-[92dvh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Top Header */}
-        <div className="bg-white px-6 py-4 border-b border-[#E6DFD5] flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="bg-white px-4 sm:px-6 py-3.5 border-b border-[#E6DFD5] flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 truncate">
             <span
-              className="text-xs font-code-mono font-bold px-2.5 py-1 rounded-md"
+              className="text-[10px] sm:text-xs font-code-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shrink-0"
               style={{ backgroundColor: project.colorScheme.badgeBg, color: project.colorScheme.badgeText }}
             >
               {project.timeline}
             </span>
-            <div>
-              <h3 className="font-heading-sans font-bold text-lg text-[#1C1613]">
+            <div className="truncate">
+              <h3 className="font-heading-sans font-bold text-base sm:text-lg text-[#1C1613] truncate">
                 {project.title}
               </h3>
-              <p className="text-xs text-[#7A6A5E] hidden sm:block">
+              <p className="text-[11px] text-[#7A6A5E] hidden sm:block truncate">
                 {project.subtitle} &bull; {project.role}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <a
               href={project.githubUrl}
               target="_blank"
@@ -140,21 +164,21 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Modal Sub-Navigation Tabs */}
-        <div className="flex border-b border-[#E6DFD5] bg-[#F7F3EE] px-6 text-xs font-heading-sans font-semibold">
+        <div className="flex border-b border-[#E6DFD5] bg-[#F7F3EE] px-4 sm:px-6 text-xs font-heading-sans font-semibold overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab("interactive")}
-            className={`py-3 px-4 border-b-2 transition-colors flex items-center gap-2 ${
+            className={`py-3 px-3 sm:px-4 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "interactive"
                 ? "border-[#E06A26] text-[#E06A26] bg-white rounded-t-lg"
                 : "border-transparent text-[#7A6A5E] hover:text-[#1C1613]"
             }`}
           >
             <Cpu className="w-3.5 h-3.5" />
-            <span>Interactive Live Simulation</span>
+            <span>Interactive Simulator</span>
           </button>
           <button
             onClick={() => setActiveTab("architecture")}
-            className={`py-3 px-4 border-b-2 transition-colors flex items-center gap-2 ${
+            className={`py-3 px-3 sm:px-4 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "architecture"
                 ? "border-[#E06A26] text-[#E06A26] bg-white rounded-t-lg"
                 : "border-transparent text-[#7A6A5E] hover:text-[#1C1613]"
@@ -165,7 +189,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </button>
           <button
             onClick={() => setActiveTab("schema")}
-            className={`py-3 px-4 border-b-2 transition-colors flex items-center gap-2 ${
+            className={`py-3 px-3 sm:px-4 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "schema"
                 ? "border-[#E06A26] text-[#E06A26] bg-white rounded-t-lg"
                 : "border-transparent text-[#7A6A5E] hover:text-[#1C1613]"
@@ -177,25 +201,25 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1">
           {/* TAB 1: INTERACTIVE SIMULATION */}
           {activeTab === "interactive" && (
             <div>
               {/* E-Commerce Simulation */}
               {project.demoType === "ecommerce" && (
                 <div className="space-y-6">
-                  <div className="p-4 rounded-2xl bg-[#FFF3EB] border border-[#FAD8C3] text-xs text-[#963A07] flex items-center justify-between">
+                  <div className="p-3 sm:p-4 rounded-2xl bg-[#FFF3EB] border border-[#FAD8C3] text-xs text-[#963A07] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <strong className="block font-heading-sans font-bold">Interactive Full-Stack Commerce Simulator</strong>
                       <span>Experience cart state synchronization, pricing algorithms, and order dispatching.</span>
                     </div>
-                    <span className="font-code-mono text-[11px] bg-white px-2.5 py-1 rounded-md border border-[#FAD8C3] shrink-0">
+                    <span className="font-code-mono text-[11px] bg-white px-2.5 py-1 rounded-md border border-[#FAD8C3] shrink-0 self-start sm:self-auto">
                       REST: Node/Express
                     </span>
                   </div>
 
                   {orderPlaced ? (
-                    <div className="p-8 text-center bg-white rounded-2xl border border-[#E6DFD5] space-y-4">
+                    <div className="p-6 sm:p-8 text-center bg-white rounded-2xl border border-[#E6DFD5] space-y-4">
                       <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
                         <Check className="w-6 h-6" />
                       </div>
@@ -313,12 +337,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               {/* Chat Simulation */}
               {project.demoType === "chat" && (
                 <div className="space-y-4">
-                  <div className="p-3.5 rounded-2xl bg-[#EDF6F1] border border-[#C5E3D4] text-xs text-[#185038] flex items-center justify-between">
+                  <div className="p-3 sm:p-3.5 rounded-2xl bg-[#EDF6F1] border border-[#C5E3D4] text-xs text-[#185038] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <strong className="block font-heading-sans font-bold">Real-Time Socket Channel Simulator</strong>
                       <span>Sub-50ms message delivery between simulated clients over WebSocket channels.</span>
                     </div>
-                    <span className="font-code-mono text-[11px] bg-white px-2 py-0.5 rounded border border-[#C5E3D4]">
+                    <span className="font-code-mono text-[11px] bg-white px-2 py-0.5 rounded border border-[#C5E3D4] shrink-0 self-start sm:self-auto">
                       Socket.io v4
                     </span>
                   </div>
@@ -328,17 +352,17 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <div className="p-3 bg-[#FAF8F5] border-b border-[#E6DFD5] flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span className="font-heading-sans font-bold text-[#1C1613]">
+                        <span className="font-heading-sans font-bold text-[#1C1613] text-xs truncate">
                           #room-engineering-collaboration
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5 bg-[#F4EFEA] p-1 rounded-lg">
-                        <span className="text-[11px] text-[#7A6A5E] px-1">Active User:</span>
+                      <div className="flex items-center gap-1.5 bg-[#F4EFEA] p-1 rounded-lg shrink-0">
+                        <span className="text-[10px] text-[#7A6A5E] px-1 hidden sm:inline">Active User:</span>
                         <button
                           onClick={() => setCurrentUser(currentUser === "Recruiter" ? "Dinkar" : "Recruiter")}
                           className="px-2 py-0.5 rounded bg-white font-code-mono text-[11px] font-bold text-[#E06A26] border border-[#E6DFD5]"
                         >
-                          {currentUser} (Click to switch)
+                          {currentUser} (Switch)
                         </button>
                       </div>
                     </div>
@@ -392,8 +416,88 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               )}
 
-              {/* Campus / DSA fallback interactive preview */}
-              {(project.demoType === "campus" || project.demoType === "dsa") && (
+              {/* AI Fraud Anomaly Detection Simulator */}
+              {project.demoType === "fraud" && (
+                <div className="space-y-4">
+                  <div className="p-3 sm:p-4 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <strong className="block font-heading-sans font-bold">Deep Autoencoder Anomaly Classification Sandbox</strong>
+                      <span>Simulate real-time transactions and inspect MSE reconstruction loss against the 0.042 threshold.</span>
+                    </div>
+                    <span className="font-code-mono text-[11px] bg-white px-2.5 py-1 rounded-md border border-red-200 shrink-0 self-start sm:self-auto">
+                      Keras + Flask API
+                    </span>
+                  </div>
+
+                  <div className="bg-white rounded-2xl border border-[#E6DFD5] p-4 space-y-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#F4EFEA]">
+                      <span className="font-heading-sans font-bold text-xs text-[#1C1613] flex items-center gap-1.5">
+                        <Activity className="w-3.5 h-3.5 text-red-600" />
+                        <span>Simulate Live Transaction Ingestion:</span>
+                      </span>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => testNewTransaction(false)}
+                          disabled={analyzingTxn}
+                          className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 transition-colors"
+                        >
+                          + Normal Txn
+                        </button>
+                        <button
+                          onClick={() => testNewTransaction(true)}
+                          disabled={analyzingTxn}
+                          className="px-3 py-1.5 rounded-lg bg-red-50 border border-red-300 text-red-800 text-xs font-semibold hover:bg-red-100 transition-colors flex items-center gap-1"
+                        >
+                          <AlertTriangle className="w-3 h-3" />
+                          <span>+ Fraud Txn</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {lastAnalysis && (
+                      <div className={`p-2.5 rounded-xl text-xs font-code-mono font-medium ${
+                        lastAnalysis.includes("BLOCKED") ? "bg-red-100 text-red-800 border border-red-300" : "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                      }`}>
+                        {lastAnalysis}
+                      </div>
+                    )}
+
+                    <div className="space-y-2">
+                      <div className="text-[11px] font-code-mono text-[#8A7B70] flex justify-between">
+                        <span>Transaction ID &bull; Category</span>
+                        <span>MSE Loss &bull; Status</span>
+                      </div>
+                      {testTransactions.map((tx) => (
+                        <div
+                          key={tx.id}
+                          className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
+                            tx.isFraud ? "bg-red-50/50 border-red-200" : "bg-[#FAF8F5] border-[#E6DFD5]"
+                          }`}
+                        >
+                          <div>
+                            <span className="font-bold text-[#1C1613]">{tx.id}</span>
+                            <span className="ml-2 font-code-mono font-bold">{tx.amount}</span>
+                            <p className="text-[11px] text-[#7A6A5E] mt-0.5">{tx.category}</p>
+                          </div>
+                          <div className="text-right">
+                            <span className={`font-code-mono font-bold block ${tx.isFraud ? "text-red-600" : "text-emerald-700"}`}>
+                              MSE: {tx.mse}
+                            </span>
+                            <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              tx.isFraud ? "bg-red-600 text-white" : "bg-emerald-600 text-white"
+                            }`}>
+                              {tx.isFraud ? "FRAUD BLOCKED" : "NORMAL"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Fallback for other simulators */}
+              {(project.demoType === "sniffer" || project.demoType === "campus" || project.demoType === "dsa" || project.demoType === "generic") && (
                 <div className="p-6 rounded-2xl bg-white border border-[#E6DFD5] space-y-4 text-center">
                   <div className="w-12 h-12 rounded-xl bg-[#F4EFEA] text-[#E06A26] flex items-center justify-center mx-auto">
                     <Terminal className="w-6 h-6" />
@@ -438,8 +542,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
               <div className="bg-[#1C1613] text-[#FAF8F5] p-4 rounded-2xl font-code-mono text-xs space-y-2">
                 <div className="text-[#8A7B70] border-b border-[#2D241E] pb-1.5 flex justify-between">
-                  <span>API Route Contracts (Express.js)</span>
-                  <span className="text-emerald-400">REST v1.0</span>
+                  <span>API Route Contracts</span>
+                  <span className="text-emerald-400">REST / Socket Contracts</span>
                 </div>
                 {project.demoType === "ecommerce" ? (
                   <div className="space-y-1 text-[11px] pt-1">
@@ -449,13 +553,18 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <div><span className="text-emerald-400 font-bold">POST</span> /api/cart/sync <span className="text-[#8A7B70]">// Optimistic cart persistence</span></div>
                     <div><span className="text-emerald-400 font-bold">POST</span> /api/orders <span className="text-[#8A7B70]">// Atomic order creation &amp; stock decrement</span></div>
                   </div>
+                ) : project.demoType === "fraud" ? (
+                  <div className="space-y-1 text-[11px] pt-1">
+                    <div><span className="text-emerald-400 font-bold">POST</span> /api/predict <span className="text-[#8A7B70]">// Ingests 29 PCA features → returns MSE</span></div>
+                    <div><span className="text-sky-400 font-bold">GET</span>  /api/metrics <span className="text-[#8A7B70]">// Confusion matrix, ROC-AUC score, latency</span></div>
+                    <div><span className="text-amber-400 font-bold">WS</span>   /stream/transactions <span className="text-[#8A7B70]">// WebSocket real-time fraud alert feed</span></div>
+                  </div>
                 ) : (
                   <div className="space-y-1 text-[11px] pt-1">
                     <div><span className="text-amber-400 font-bold">EVENT</span> connection <span className="text-[#8A7B70]">// Client handshake verification</span></div>
                     <div><span className="text-amber-400 font-bold">EVENT</span> join_room <span className="text-[#8A7B70]">// Socket joins room identifier</span></div>
                     <div><span className="text-emerald-400 font-bold">EVENT</span> send_message <span className="text-[#8A7B70]">// Broadcasts to room &amp; writes to Mongo</span></div>
                     <div><span className="text-sky-400 font-bold">EVENT</span> user_typing <span className="text-[#8A7B70]">// Debounced presence indicator</span></div>
-                    <div><span className="text-red-400 font-bold">EVENT</span> disconnect <span className="text-[#8A7B70]">// Updates presence status to offline</span></div>
                   </div>
                 )}
               </div>
@@ -503,17 +612,17 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Modal Bottom Bar */}
-        <div className="bg-[#FAF8F5] px-6 py-3.5 border-t border-[#E6DFD5] flex items-center justify-between text-xs">
-          <span className="text-[#8A7B70] font-code-mono text-[11px]">
-            Dinkar Kumar Portfolio &bull; Parul University &apos;29
+        <div className="bg-[#FAF8F5] px-4 sm:px-6 py-3.5 border-t border-[#E6DFD5] flex items-center justify-between text-xs">
+          <span className="text-[#8A7B70] font-code-mono text-[11px] truncate pr-2">
+            Dinkar Kumar &bull; Parul University &apos;29
           </span>
           <a
             href={project.githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="btn-primary-warm text-xs py-2 px-4 inline-flex items-center gap-1.5"
+            className="btn-primary-warm text-xs py-2 px-4 inline-flex items-center gap-1.5 shrink-0"
           >
-            <span>Explore on GitHub</span>
+            <span>GitHub Repository</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>

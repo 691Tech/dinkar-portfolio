@@ -37,7 +37,7 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
             </div>
 
             {/* Main Punchy Editorial Headline (Ref 1 Typography + Ref 2 High Impact) */}
-            <h1 className="font-heading-sans text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#1C1613] leading-[1.12] mb-5">
+            <h1 className="font-heading-sans text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#1C1613] leading-[1.14] sm:leading-[1.12] mb-4 sm:mb-5">
               Building thoughtful{" "}
               <span className="font-display-serif italic font-normal text-[#E06A26] px-1">
                 digital experiences
@@ -46,7 +46,7 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
             </h1>
 
             {/* Authoritative Supporting Description */}
-            <p className="font-sans text-base sm:text-lg text-[#574B42] leading-relaxed max-w-2xl mb-8">
+            <p className="font-sans text-sm sm:text-base md:text-lg text-[#574B42] leading-relaxed max-w-2xl mb-6 sm:mb-8">
               I am <span className="font-semibold text-[#1C1613]">Dinkar Kumar</span>, a Computer Science student 
               and aspiring <span className="text-[#1C1613] font-semibold">AI Engineer</span> passionate about full-stack development, 
               intelligent applications, and solving real-world problems through robust technology.
