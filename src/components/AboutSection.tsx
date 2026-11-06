@@ -4,13 +4,17 @@ import React from "react";
 import { User, MapPin, GraduationCap, Sparkles, BookOpen, Heart, ShieldCheck, ArrowUpRight } from "lucide-react";
 import { PERSONAL_DETAILS } from "@/data/portfolio";
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  onOpenProfileModal?: () => void;
+}
+
+export default function AboutSection({ onOpenProfileModal }: AboutSectionProps) {
   return (
-    <section id="about" className="py-20 md:py-28 bg-[#FAF8F5] border-b border-[#E6DFD5] relative">
+    <section id="about" className="py-16 sm:py-24 md:py-28 bg-[#FAF8F5] border-b border-[#E6DFD5] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header: Inspired by Ref 1 Editorial Rhythm */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div className="max-w-2xl">
             <div className="eyebrow-badge text-[#E06A26] mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E06A26]"></span>
@@ -33,31 +37,62 @@ export default function AboutSection() {
         </div>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-start">
           
           {/* Left Column: Visual Profile Card (5 cols) */}
           <div className="lg:col-span-5">
-            <div className="tactile-card rounded-3xl p-6 sm:p-8 bg-white border border-[#E6DFD5] relative overflow-hidden">
+            <div className="tactile-card rounded-3xl p-6 sm:p-8 bg-white border border-[#E6DFD5] relative overflow-hidden shadow-xs">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#FFF3EB] rounded-full blur-2xl -z-10"></div>
               
-              {/* Profile Monogram & Badge */}
+              {/* Profile Monogram / Photo & Badges */}
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-[#1C1613] text-[#FAF8F5] flex items-center justify-center font-heading-sans font-extrabold text-2xl shadow-md border-2 border-[#E6DFD5]">
-                  DK
+                <div 
+                  onClick={onOpenProfileModal}
+                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#E06A26] shadow-md relative shrink-0 cursor-pointer group"
+                  title="Click to inspect 3D Bitmoji &amp; Digital Identity"
+                >
+                  <img
+                    src="/images/dinkar-profile.jpg"
+                    alt="Dinkar Kumar"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/images/about-workspace.svg";
+                    }}
+                  />
+                  <div className="absolute bottom-1 right-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white shadow-xs"></div>
                 </div>
                 <div>
-                  <h3 className="font-heading-sans font-bold text-lg text-[#1C1613]">
-                    Dinkar Kumar
+                  <h3 className="font-heading-sans font-bold text-lg sm:text-xl text-[#1C1613] flex items-center gap-1.5">
+                    <span>Dinkar Kumar</span>
+                    <span className="text-[10px] font-code-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
+                      CSE-AI
+                    </span>
                   </h3>
-                  <p className="text-xs font-heading-sans font-medium text-[#E06A26]">
+                  <p className="text-xs font-heading-sans font-semibold text-[#E06A26]">
                     AI Engineer &amp; Full Stack Developer
                   </p>
                   <p className="text-[11px] text-[#8A7B70] mt-0.5 flex items-center gap-1">
                     <MapPin className="w-3 h-3 text-[#E06A26]" />
-                    Vadodara, Gujarat, India
+                    <span>Vadodara, Gujarat, India</span>
                   </p>
                 </div>
               </div>
+
+              {/* 3D Bitmoji & Digital Pass Trigger Button */}
+              {onOpenProfileModal && (
+                <button
+                  onClick={onOpenProfileModal}
+                  className="w-full mb-6 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-[#1C1613] to-[#2D241E] text-[#FAF8F5] hover:from-[#2D241E] hover:to-[#3D322B] transition-all flex items-center justify-between text-xs font-heading-sans font-semibold shadow-xs group"
+                >
+                  <span className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#FFD54F]" />
+                    <span>Inspect 3D Bitmoji &amp; Digital Pass</span>
+                  </span>
+                  <span className="text-[10px] font-code-mono text-[#FFD54F] bg-white/10 px-2 py-0.5 rounded-full group-hover:bg-white/20 transition-colors">
+                    Click to Open &rarr;
+                  </span>
+                </button>
+              )}
 
               {/* Workspace & Engineering Coordinates Visual */}
               <div className="mb-6 rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] shadow-2xs">
@@ -66,6 +101,9 @@ export default function AboutSection() {
                   alt="Dinkar Kumar Engineering Workspace"
                   className="w-full h-auto object-cover"
                   loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
                 />
               </div>
 

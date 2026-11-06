@@ -574,6 +574,19 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* TAB 3: OVERVIEW & SPECS */}
           {activeTab === "schema" && (
             <div className="space-y-4">
+              {project.imageUrl && (
+                <div className="rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] shadow-xs">
+                  <img
+                    src={project.imageUrl}
+                    alt={`${project.title} Architectural Preview`}
+                    className="w-full h-auto object-cover max-h-72"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/images/about-workspace.svg";
+                    }}
+                  />
+                </div>
+              )}
+
               <div className="p-4 rounded-2xl bg-white border border-[#E6DFD5] space-y-3">
                 <h4 className="font-heading-sans font-bold text-sm text-[#1C1613]">Project Deep-Dive</h4>
                 <p className="text-xs text-[#574B42] leading-relaxed whitespace-pre-line">

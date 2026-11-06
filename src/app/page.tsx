@@ -14,11 +14,13 @@ import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import AdminPortal from "@/components/AdminPortal";
 import ResumeModal from "@/components/ResumeModal";
+import ProfileIdentityModal from "@/components/ProfileIdentityModal";
 import MouseSpotlight from "@/components/MouseSpotlight";
 
 export default function Home() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const handleOpenContact = () => {
     const el = document.getElementById("contact");
@@ -40,6 +42,7 @@ export default function Home() {
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenResume={() => setIsResumeOpen(true)}
         onOpenContact={handleOpenContact}
+        onOpenProfileModal={() => setIsProfileOpen(true)}
       />
 
       {/* Main Page Flow */}
@@ -48,10 +51,11 @@ export default function Home() {
         <Hero
           onOpenResume={() => setIsResumeOpen(true)}
           onOpenContact={handleOpenContact}
+          onOpenProfileModal={() => setIsProfileOpen(true)}
         />
 
         {/* About Dinkar Kumar */}
-        <AboutSection />
+        <AboutSection onOpenProfileModal={() => setIsProfileOpen(true)} />
 
         {/* Featured Projects with Interactive Simulator */}
         <FeaturedProjects />
@@ -87,6 +91,14 @@ export default function Home() {
       <ResumeModal
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}
+      />
+
+      {/* 3D Snapchat Bitmoji & Digital ID Card */}
+      <ProfileIdentityModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        onOpenResume={() => setIsResumeOpen(true)}
+        onOpenContact={handleOpenContact}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { ArrowUpRight, CheckCircle2, Play, Search, Code2, Sparkles, Filter, ExternalLink, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ArrowDown, CheckCircle2, Play, Search, Code2, Sparkles, Filter, ExternalLink, ChevronRight } from "lucide-react";
 import { PROJECTS_DATA, CATALOG_PROJECTS, Project, CatalogProject } from "@/data/portfolio";
 import { GithubIcon } from "@/components/Icons";
 import DomainFilter from "./DomainFilter";
@@ -12,6 +12,7 @@ export default function FeaturedProjects() {
   const [activeModalProject, setActiveModalProject] = useState<Project | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [catalogCategory, setCatalogCategory] = useState<string>("All");
+  const [showAllCatalog, setShowAllCatalog] = useState(false);
 
   const counts: Record<string, number> = useMemo(() => ({
     all: PROJECTS_DATA.length,
@@ -134,6 +135,9 @@ export default function FeaturedProjects() {
                         alt={`${project.title} Preview`}
                         className="w-full h-full object-cover object-top transition-transform duration-300 group-hover/img:scale-102"
                         loading="lazy"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/images/about-workspace.svg";
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
                         <span className="text-white text-[10px] sm:text-[11px] font-heading-sans font-semibold flex items-center gap-1.5 bg-[#1C1613]/90 px-3 py-1 rounded-full backdrop-blur-xs">
@@ -251,7 +255,7 @@ export default function FeaturedProjects() {
 
           {/* Catalog Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredCatalog.map((item, idx) => (
+            {(showAllCatalog || catalogCategory !== "All" || searchQuery.trim() !== "" ? filteredCatalog : filteredCatalog.slice(0, 6)).map((item, idx) => (
               <div
                 key={idx}
                 className="tactile-card rounded-2xl p-5 bg-white border border-[#E6DFD5] flex flex-col justify-between hover:border-[#D6CBC0] transition-colors"
@@ -303,6 +307,30 @@ export default function FeaturedProjects() {
               </div>
             ))}
           </div>
+
+          {/* Expand / Collapse Toggle for Catalog */}
+          {filteredCatalog.length > 6 && !showAllCatalog && catalogCategory === "All" && searchQuery.trim() === "" && (
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => setShowAllCatalog(true)}
+                className="btn-secondary-warm py-3 px-6 text-xs inline-flex items-center gap-2"
+              >
+                <span>Explore All {filteredCatalog.length} Open-Source Repositories</span>
+                <ArrowDown className="w-3.5 h-3.5 text-[#E06A26]" />
+              </button>
+            </div>
+          )}
+
+          {showAllCatalog && filteredCatalog.length > 6 && (
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => setShowAllCatalog(false)}
+                className="btn-secondary-warm py-2.5 px-5 text-xs inline-flex items-center gap-2"
+              >
+                <span>Collapse to Top 6 Repositories</span>
+              </button>
+            </div>
+          )}
         </div>
 
       </div>

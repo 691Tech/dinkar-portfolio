@@ -86,7 +86,7 @@ My journey centers around the intersection of engineering discipline and creativ
 
 I am deeply curious about AI integration, intelligent automation, and mastering fundamental Data Structures & Algorithms. Every line of code I write is guided by intentionality, clean architectural patterns, and user empathy.`,
   availabilityStatus: "Available for Internships & Projects",
-  adminPin: "6910"
+  profilePhoto: "/images/dinkar-profile.jpg"
 };
 
 export const PROJECTS_DATA: Project[] = [

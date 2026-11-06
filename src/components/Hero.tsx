@@ -7,33 +7,63 @@ import { PERSONAL_DETAILS } from "@/data/portfolio";
 interface HeroProps {
   onOpenResume: () => void;
   onOpenContact: () => void;
+  onOpenProfileModal?: () => void;
 }
 
-export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
+export default function Hero({ onOpenResume, onOpenContact, onOpenProfileModal }: HeroProps) {
   const [activeTab, setActiveTab] = useState<"telemetry" | "stack" | "git">("telemetry");
 
   return (
-    <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24 border-b border-[#E6DFD5] bg-warm-dots">
+    <section className="relative overflow-hidden pt-8 pb-16 sm:pt-12 sm:pb-20 md:pt-16 md:pb-24 border-b border-[#E6DFD5] bg-warm-dots">
       {/* Decorative Warm Ambient Glows (Subtle, NOT generic blue-purple gradient) */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#F7EDE2] to-transparent rounded-full blur-3xl pointer-events-none -z-10 opacity-70"></div>
       <div className="absolute top-40 right-10 w-[300px] h-[300px] bg-[#FFF3EB] rounded-full blur-2xl pointer-events-none -z-10 opacity-50"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 items-center">
           
           {/* Left Column: Editorial Headline & Persona (7 cols) */}
           <div className="lg:col-span-7 flex flex-col items-start">
             
-            {/* Architectural Eyebrow Badge (Inspired by Ref 1 + 2) */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E0D7CC] text-xs font-heading-sans font-semibold text-[#574B42] mb-6 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#E06A26] animate-pulse"></span>
-              <span className="tracking-wider uppercase text-[11px] text-[#2D241E]">
-                Dinkar Kumar • AI & Software Engineering
-              </span>
-              <span className="text-[#C4B7AA]">•</span>
-              <span className="text-[11px] text-[#7A6A5E] font-medium hidden sm:inline">
-                Parul University &apos;29
-              </span>
+            {/* Architectural Eyebrow Badge with Avatar */}
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              {onOpenProfileModal ? (
+                <button
+                  onClick={onOpenProfileModal}
+                  className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white border border-[#E0D7CC] hover:border-[#E06A26] transition-all shadow-2xs group cursor-pointer"
+                  title="Click to view Dinkar's 3D Bitmoji &amp; Digital ID Pass"
+                >
+                  <div className="w-6 h-6 rounded-full overflow-hidden border border-[#E06A26] bg-[#1C1613] shrink-0">
+                    <img
+                      src="/images/dinkar-profile.jpg"
+                      alt="Dinkar Kumar"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                  </div>
+                  <span className="text-[11px] font-heading-sans font-bold text-[#1C1613] tracking-wide">
+                    Dinkar Kumar
+                  </span>
+                  <span className="text-[10px] font-code-mono text-[#E06A26] bg-[#FFF3EB] px-2 py-0.5 rounded-full font-semibold group-hover:bg-[#FFE8D6] transition-colors flex items-center gap-1">
+                    <Sparkles className="w-2.5 h-2.5" />
+                    <span>3D ID</span>
+                  </span>
+                </button>
+              ) : (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E0D7CC] text-xs font-heading-sans font-semibold text-[#574B42] shadow-2xs">
+                  <span className="w-2 h-2 rounded-full bg-[#E06A26] animate-pulse"></span>
+                  <span className="tracking-wider uppercase text-[11px] text-[#2D241E]">
+                    Dinkar Kumar • AI &amp; Software Engineering
+                  </span>
+                </div>
+              )}
+
+              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F4EFEA] border border-[#E6DFD5] text-[11px] font-heading-sans font-medium text-[#574B42]">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Parul University &apos;29 (CSE-AI)</span>
+              </div>
             </div>
 
             {/* Main Punchy Editorial Headline (Ref 1 Typography + Ref 2 High Impact) */}
@@ -53,10 +83,10 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 mb-10 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-8 sm:mb-10 w-full sm:w-auto">
               <a
                 href="#projects"
-                className="btn-primary-warm w-full sm:w-auto justify-center"
+                className="btn-primary-warm justify-center text-center py-3"
               >
                 <span>Explore Featured Projects</span>
                 <ArrowDown className="w-4 h-4" />
@@ -64,7 +94,7 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
 
               <button
                 onClick={onOpenResume}
-                className="btn-secondary-warm w-full sm:w-auto justify-center"
+                className="btn-secondary-warm justify-center text-center py-3"
               >
                 <FileText className="w-4 h-4 text-[#E06A26]" />
                 <span>View Resume PDF</span>
@@ -72,34 +102,34 @@ export default function Hero({ onOpenResume, onOpenContact }: HeroProps) {
 
               <button
                 onClick={onOpenContact}
-                className="px-5 py-3 rounded-full text-xs font-heading-sans font-semibold text-[#574B42] hover:text-[#1C1613] hover:bg-[#F4EFEA] transition-colors w-full sm:w-auto justify-center inline-flex items-center gap-1.5"
+                className="px-5 py-3 rounded-full text-xs font-heading-sans font-semibold text-[#574B42] hover:text-[#1C1613] hover:bg-[#F4EFEA] transition-colors justify-center inline-flex items-center gap-1.5 border border-[#E6DFD5] sm:border-transparent"
               >
                 <span>Contact Dinkar</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {/* Trust and Academic Indicators Strip (Inspired by Ref 2) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full pt-6 border-t border-[#E6DFD5]">
-              <div className="flex flex-col">
-                <span className="font-code-mono text-xs text-[#8A7B70] uppercase tracking-wider">Education</span>
-                <span className="font-heading-sans font-bold text-sm text-[#1C1613] mt-0.5">Parul Univ &apos;29</span>
-                <span className="text-[11px] text-[#7A6A5E]">B.Tech CSE (AI)</span>
+            {/* Trust and Academic Indicators Strip (Optimized for Mobile Breathing Room) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 w-full pt-4 sm:pt-6 border-t border-[#E6DFD5]">
+              <div className="flex flex-col p-3 rounded-2xl bg-white/70 border border-[#E6DFD5] shadow-2xs">
+                <span className="font-code-mono text-[10px] sm:text-xs text-[#8A7B70] uppercase tracking-wider">Education</span>
+                <span className="font-heading-sans font-bold text-xs sm:text-sm text-[#1C1613] mt-0.5">Parul Univ &apos;29</span>
+                <span className="text-[10px] sm:text-[11px] text-[#7A6A5E]">B.Tech CSE (AI)</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-code-mono text-xs text-[#8A7B70] uppercase tracking-wider">Core Focus</span>
-                <span className="font-heading-sans font-bold text-sm text-[#1C1613] mt-0.5">Full Stack + AI</span>
-                <span className="text-[11px] text-[#7A6A5E]">React & Node.js</span>
+              <div className="flex flex-col p-3 rounded-2xl bg-white/70 border border-[#E6DFD5] shadow-2xs">
+                <span className="font-code-mono text-[10px] sm:text-xs text-[#8A7B70] uppercase tracking-wider">Core Focus</span>
+                <span className="font-heading-sans font-bold text-xs sm:text-sm text-[#1C1613] mt-0.5">Full Stack + AI</span>
+                <span className="text-[10px] sm:text-[11px] text-[#7A6A5E]">React &amp; Node.js</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-code-mono text-xs text-[#8A7B70] uppercase tracking-wider">Academics</span>
-                <span className="font-heading-sans font-bold text-sm text-[#E06A26] mt-0.5">94% Class XI</span>
-                <span className="text-[11px] text-[#7A6A5E]">CBSE Board Exam</span>
+              <div className="flex flex-col p-3 rounded-2xl bg-white/70 border border-[#E6DFD5] shadow-2xs">
+                <span className="font-code-mono text-[10px] sm:text-xs text-[#8A7B70] uppercase tracking-wider">Academics</span>
+                <span className="font-heading-sans font-bold text-xs sm:text-sm text-[#E06A26] mt-0.5">94% Class XI</span>
+                <span className="text-[10px] sm:text-[11px] text-[#7A6A5E]">CBSE Board Exam</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-code-mono text-xs text-[#8A7B70] uppercase tracking-wider">Location</span>
-                <span className="font-heading-sans font-bold text-sm text-[#1C1613] mt-0.5">Vadodara, IN</span>
-                <span className="text-[11px] text-[#7A6A5E]">Open to Remote</span>
+              <div className="flex flex-col p-3 rounded-2xl bg-white/70 border border-[#E6DFD5] shadow-2xs">
+                <span className="font-code-mono text-[10px] sm:text-xs text-[#8A7B70] uppercase tracking-wider">Location</span>
+                <span className="font-heading-sans font-bold text-xs sm:text-sm text-[#1C1613] mt-0.5">Vadodara, IN</span>
+                <span className="text-[10px] sm:text-[11px] text-[#7A6A5E]">Open to Remote</span>
               </div>
             </div>
 
