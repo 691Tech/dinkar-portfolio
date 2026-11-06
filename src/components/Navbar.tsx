@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { FileText, Shield, Menu, X, ArrowUpRight, Terminal, Mail, Sparkles } from "lucide-react";
+import { FileText, Shield, Menu, X, ArrowUpRight, Terminal, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { PERSONAL_DETAILS } from "@/data/portfolio";
 
@@ -10,10 +10,9 @@ interface NavbarProps {
   onOpenAdmin: () => void;
   onOpenResume: () => void;
   onOpenContact: () => void;
-  onOpenProfileModal?: () => void;
 }
 
-export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact, onOpenProfileModal }: NavbarProps) {
+export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -70,55 +69,29 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact, onOpe
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        {/* Brand Monogram & Name + Profile Trigger */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onOpenProfileModal || (() => window.scrollTo({ top: 0, behavior: "smooth" }))}
-            className="flex items-center gap-2.5 text-left group focus:outline-hidden"
-            title="Click to open Dinkar's 3D Bitmoji &amp; Digital Identity"
-          >
-            {/* Real Photo Avatar with Pulse Ring */}
-            <div className="relative w-10 h-10 rounded-xl overflow-hidden border-2 border-[#E06A26] shadow-xs group-hover:scale-105 transition-transform bg-[#1C1613]">
-              <img
-                src="/images/dinkar-profile.jpg"
-                alt="Dinkar Kumar"
-                className="w-full h-full object-cover object-center"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center font-heading-sans font-bold text-xs text-[#FAF8F5] -z-10 bg-[#1C1613]">
-                DK
-              </div>
-              <div className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></div>
-            </div>
-
-            <div className="flex flex-col">
-              <span className="font-heading-sans font-bold text-sm tracking-tight text-[#1C1613] flex items-center gap-1.5 group-hover:text-[#E06A26] transition-colors">
-                <span>Dinkar Kumar</span>
-                <span className="hidden sm:inline-block text-[9px] font-code-mono px-1.5 py-0.2 rounded-sm bg-[#F4EFEA] border border-[#E6DFD5] text-[#574B42]">
-                  CSE-AI &apos;29
-                </span>
+        {/* Brand Monogram & Name */}
+        <Link
+          href="/"
+          className="flex items-center gap-3 group focus:outline-hidden"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          <div className="w-10 h-10 rounded-xl bg-[#1C1613] text-[#FAF8F5] flex items-center justify-center font-heading-sans font-bold text-sm tracking-tight transition-transform group-hover:scale-105 group-hover:bg-[#E06A26] shadow-xs">
+            DK
+          </div>
+          <div className="flex flex-col">
+            <span className="font-heading-sans font-bold text-sm tracking-tight text-[#1C1613] flex items-center gap-1.5">
+              Dinkar Kumar
+              <span className="text-[10px] font-code-mono px-1.5 py-0.2 rounded-sm bg-[#F4EFEA] border border-[#E6DFD5] text-[#574B42]">
+                691Tech
               </span>
-              <span className="text-[11px] text-[#8A7B70] font-sans flex items-center gap-1">
-                <span>AI Engineer</span>
-                <span className="text-[#E06A26] font-medium hidden sm:inline">&bull; 3D Pass</span>
-              </span>
-            </div>
-          </button>
-
-          {/* 3D Bitmoji Pill Button */}
-          {onOpenProfileModal && (
-            <button
-              onClick={onOpenProfileModal}
-              className="hidden md:inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FFF3EB] border border-[#FAD8C3] text-[10px] font-heading-sans font-bold text-[#E06A26] hover:bg-[#FFE8D6] transition-colors shadow-2xs"
-              title="Open Interactive 3D Avatar Pass"
-            >
-              <Sparkles className="w-3 h-3 text-[#E06A26]" />
-              <span>3D Card</span>
-            </button>
-          )}
-        </div>
+            </span>
+            <span className="text-[11px] text-[#8A7B70] font-sans">
+              AI Engineer & Full Stack Dev
+            </span>
+          </div>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1 bg-[#F4EFEA]/80 p-1.5 rounded-full border border-[#E6DFD5]">
@@ -188,38 +161,6 @@ export default function Navbar({ onOpenAdmin, onOpenResume, onOpenContact, onOpe
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#FAF8F5] border-b border-[#E6DFD5] px-4 pt-3 pb-6 animate-fadeIn">
-          {/* Mobile Profile Card Banner */}
-          <div className="mb-4 p-3 rounded-2xl bg-white border border-[#E6DFD5] flex items-center justify-between shadow-2xs">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl overflow-hidden border border-[#E06A26] bg-[#1C1613] shrink-0">
-                <img
-                  src="/images/dinkar-profile.jpg"
-                  alt="Dinkar Kumar"
-                  className="w-full h-full object-cover object-center"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
-              </div>
-              <div>
-                <h4 className="font-heading-sans font-bold text-sm text-[#1C1613]">Dinkar Kumar</h4>
-                <p className="text-[11px] text-[#E06A26] font-medium">B.Tech CSE-AI &apos;29 &bull; Parul Univ</p>
-              </div>
-            </div>
-            {onOpenProfileModal && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenProfileModal();
-                }}
-                className="py-1.5 px-3 rounded-xl bg-[#FFF3EB] border border-[#FAD8C3] text-[11px] font-heading-sans font-bold text-[#E06A26] flex items-center gap-1"
-              >
-                <Sparkles className="w-3 h-3 text-[#E06A26]" />
-                <span>3D Card</span>
-              </button>
-            )}
-          </div>
-
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => (
               <a

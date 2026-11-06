@@ -33,7 +33,7 @@ export default function SkillsSection() {
         </div>
 
         {/* Category Navigation Pills */}
-        <div className="flex items-center sm:justify-center overflow-x-auto no-scrollbar gap-2 mb-8 sm:mb-12 py-1 px-1">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
           {SKILL_CATEGORIES.map((category, idx) => {
             const Icon = icons[idx] || Sparkles;
             const isActive = activeCategoryIndex === idx;
@@ -42,7 +42,7 @@ export default function SkillsSection() {
               <button
                 key={category.title}
                 onClick={() => setActiveCategoryIndex(idx)}
-                className={`px-4 py-2.5 rounded-full text-xs font-heading-sans font-semibold transition-all flex items-center gap-2 shrink-0 ${
+                className={`px-4 py-2.5 rounded-full text-xs font-heading-sans font-semibold transition-all flex items-center gap-2 ${
                   isActive
                     ? "bg-[#1C1613] text-[#FAF8F5] shadow-xs"
                     : "bg-white text-[#574B42] border border-[#E6DFD5] hover:bg-[#F4EFEA] hover:text-[#1C1613]"

@@ -1,22 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { User, MapPin, GraduationCap, Sparkles, BookOpen, Heart, ShieldCheck, ArrowUpRight, Box, Monitor } from "lucide-react";
+import React from "react";
+import { User, MapPin, GraduationCap, Sparkles, BookOpen, Heart, ShieldCheck, ArrowUpRight } from "lucide-react";
 import { PERSONAL_DETAILS } from "@/data/portfolio";
-import Interactive3DModel from "./Interactive3DModel";
 
-interface AboutSectionProps {
-  onOpenProfileModal?: () => void;
-}
-
-export default function AboutSection({ onOpenProfileModal }: AboutSectionProps) {
-  const [visualMode, setVisualMode] = useState<"3d" | "workspace">("3d");
+export default function AboutSection() {
   return (
-    <section id="about" className="py-16 sm:py-24 md:py-28 bg-[#FAF8F5] border-b border-[#E6DFD5] relative">
+    <section id="about" className="py-20 md:py-28 bg-[#FAF8F5] border-b border-[#E6DFD5] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header: Inspired by Ref 1 Editorial Rhythm */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
             <div className="eyebrow-badge text-[#E06A26] mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E06A26]"></span>
@@ -39,112 +33,50 @@ export default function AboutSection({ onOpenProfileModal }: AboutSectionProps) 
         </div>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Left Column: Visual Profile Card (5 cols) */}
           <div className="lg:col-span-5">
-            <div className="tactile-card rounded-3xl p-6 sm:p-8 bg-white border border-[#E6DFD5] relative overflow-hidden shadow-xs">
+            <div className="tactile-card rounded-3xl p-6 sm:p-8 bg-white border border-[#E6DFD5] relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#FFF3EB] rounded-full blur-2xl -z-10"></div>
               
-              {/* Profile Monogram / Photo & Badges */}
+              {/* Profile Monogram & Badge */}
               <div className="flex items-center gap-4 mb-6">
-                <div 
-                  onClick={onOpenProfileModal}
-                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#E06A26] shadow-md relative shrink-0 cursor-pointer group"
-                  title="Click to inspect 3D Bitmoji &amp; Digital Identity"
-                >
-                  <img
-                    src="/images/dinkar-profile.jpg"
-                    alt="Dinkar Kumar"
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/images/about-workspace.svg";
-                    }}
-                  />
-                  <div className="absolute bottom-1 right-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white shadow-xs"></div>
+                <div className="w-16 h-16 rounded-2xl bg-[#1C1613] text-[#FAF8F5] flex items-center justify-center font-heading-sans font-extrabold text-2xl shadow-md border-2 border-[#E6DFD5]">
+                  DK
                 </div>
                 <div>
-                  <h3 className="font-heading-sans font-bold text-lg sm:text-xl text-[#1C1613] flex items-center gap-1.5">
-                    <span>Dinkar Kumar</span>
-                    <span className="text-[10px] font-code-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
-                      CSE-AI
-                    </span>
+                  <h3 className="font-heading-sans font-bold text-lg text-[#1C1613]">
+                    Dinkar Kumar
                   </h3>
-                  <p className="text-xs font-heading-sans font-semibold text-[#E06A26]">
+                  <p className="text-xs font-heading-sans font-medium text-[#E06A26]">
                     AI Engineer &amp; Full Stack Developer
                   </p>
                   <p className="text-[11px] text-[#8A7B70] mt-0.5 flex items-center gap-1">
                     <MapPin className="w-3 h-3 text-[#E06A26]" />
-                    <span>Vadodara, Gujarat, India</span>
+                    Vadodara, Gujarat, India
                   </p>
                 </div>
               </div>
 
-              {/* 3D Bitmoji & Digital Pass Trigger Button */}
-              {onOpenProfileModal && (
-                <button
-                  onClick={onOpenProfileModal}
-                  className="w-full mb-6 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-[#1C1613] to-[#2D241E] text-[#FAF8F5] hover:from-[#2D241E] hover:to-[#3D322B] transition-all flex items-center justify-between text-xs font-heading-sans font-semibold shadow-xs group"
-                >
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#FFD54F]" />
-                    <span>Inspect 3D Bitmoji &amp; Digital Pass</span>
-                  </span>
-                  <span className="text-[10px] font-code-mono text-[#FFD54F] bg-white/10 px-2 py-0.5 rounded-full group-hover:bg-white/20 transition-colors">
-                    Click to Open &rarr;
-                  </span>
-                </button>
-              )}
-
-              {/* Interactive 3D Model & Engineering Coordinates Visual */}
-              <div className="mb-6 space-y-2">
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-[10px] font-code-mono text-[#8A7B70] uppercase tracking-wider">
-                    Visual Presence
-                  </span>
-                  <div className="inline-flex p-0.5 rounded-lg bg-[#FAF8F5] border border-[#E6DFD5] gap-1">
-                    <button
-                      onClick={() => setVisualMode("3d")}
-                      className={`px-2.5 py-1 rounded-md text-[10px] font-heading-sans font-bold transition-all flex items-center gap-1 ${
-                        visualMode === "3d"
-                          ? "bg-[#E06A26] text-white shadow-xs"
-                          : "text-[#574B42] hover:text-[#1C1613]"
-                      }`}
-                    >
-                      <Box className="w-3 h-3" />
-                      <span>Interactive 3D</span>
-                    </button>
-                    <button
-                      onClick={() => setVisualMode("workspace")}
-                      className={`px-2.5 py-1 rounded-md text-[10px] font-heading-sans font-bold transition-all flex items-center gap-1 ${
-                        visualMode === "workspace"
-                          ? "bg-[#1C1613] text-white shadow-xs"
-                          : "text-[#574B42] hover:text-[#1C1613]"
-                      }`}
-                    >
-                      <Monitor className="w-3 h-3" />
-                      <span>Workspace</span>
-                    </button>
-                  </div>
+              {/* Verified Engineering Credentials Slate (Compact & Creative, No 3D clutter) */}
+              <div className="mb-6 p-4 rounded-2xl bg-[#FAF8F5] border border-[#EAE3D8] space-y-3">
+                <div className="flex items-center justify-between text-xs pb-2 border-b border-[#EFE8DF]">
+                  <span className="font-code-mono text-[11px] text-[#8A7B70] uppercase tracking-wider">Academic Track</span>
+                  <span className="font-heading-sans font-bold text-[#1C1613]">Parul University &apos;29</span>
                 </div>
-
-                {visualMode === "3d" ? (
-                  <div className="w-full">
-                    <Interactive3DModel className="w-full h-72 sm:h-80" autoRotate={true} />
-                  </div>
-                ) : (
-                  <div className="rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] shadow-2xs">
-                    <img
-                      src="/images/about-workspace.svg"
-                      alt="Dinkar Kumar Engineering Workspace"
-                      className="w-full h-auto object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  </div>
-                )}
+                <div className="flex items-center justify-between text-xs pb-2 border-b border-[#EFE8DF]">
+                  <span className="font-code-mono text-[11px] text-[#8A7B70] uppercase tracking-wider">Specialization</span>
+                  <span className="font-heading-sans font-bold text-[#E06A26]">B.Tech CSE (AI)</span>
+                </div>
+                <div className="flex items-center justify-between text-xs pb-2 border-b border-[#EFE8DF]">
+                  <span className="font-code-mono text-[11px] text-[#8A7B70] uppercase tracking-wider">CBSE Board Exam</span>
+                  <span className="font-heading-sans font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">94% Class XI</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-code-mono text-[11px] text-[#8A7B70] uppercase tracking-wider">Core Stacks</span>
+                  <span className="font-code-mono text-[11px] text-[#1C1613] font-semibold">React &bull; Node &bull; Java &bull; Python</span>
+                </div>
               </div>
 
               {/* Bio summary */}

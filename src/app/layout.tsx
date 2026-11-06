@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Outfit, Manrope, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -84,11 +83,6 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1C1613] antialiased selection:bg-[#E06A26] selection:text-white">
         {children}
-        <Script
-          type="module"
-          src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );

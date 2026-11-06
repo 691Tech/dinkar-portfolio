@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { ArrowUpRight, ArrowDown, CheckCircle2, Play, Search, Code2, Sparkles, Filter, ExternalLink, ChevronRight } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Play, Search, Code2, Sparkles, Filter, ExternalLink, ChevronRight } from "lucide-react";
 import { PROJECTS_DATA, CATALOG_PROJECTS, Project, CatalogProject } from "@/data/portfolio";
 import { GithubIcon } from "@/components/Icons";
 import DomainFilter from "./DomainFilter";
@@ -12,7 +12,6 @@ export default function FeaturedProjects() {
   const [activeModalProject, setActiveModalProject] = useState<Project | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [catalogCategory, setCatalogCategory] = useState<string>("All");
-  const [showAllCatalog, setShowAllCatalog] = useState(false);
 
   const counts: Record<string, number> = useMemo(() => ({
     all: PROJECTS_DATA.length,
@@ -106,18 +105,20 @@ export default function FeaturedProjects() {
           {filteredFeatured.map((project) => (
             <div
               key={project.id}
-              className="tactile-card rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 bg-white border border-[#E6DFD5] flex flex-col justify-between relative group hover:border-[#D6CBC0]"
+              onClick={() => setActiveModalProject(project)}
+              className="tactile-card rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 bg-white border border-[#E6DFD5] flex flex-col justify-between relative group hover:border-[#D6CBC0] cursor-pointer"
             >
               <div>
                 {/* Top Meta Bar */}
                 <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-[#F4EFEA]">
                   <span
-                    className="text-[10px] sm:text-xs font-code-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md"
+                    className="text-[10px] sm:text-xs font-code-mono font-bold px-2.5 py-1 rounded-full"
                     style={{ backgroundColor: project.colorScheme.badgeBg, color: project.colorScheme.badgeText }}
                   >
                     {project.timeline}
                   </span>
-                  <span className="text-[10px] sm:text-xs font-code-mono text-[#8A7B70]">
+                  <span className="text-[10px] sm:text-xs font-code-mono text-[#8A7B70] flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     {project.categoryLabel}
                   </span>
                 </div>
@@ -125,21 +126,17 @@ export default function FeaturedProjects() {
                 {/* Visual Project Preview Mockup */}
                 {project.imageUrl && (
                   <div
-                    onClick={() => setActiveModalProject(project)}
-                    className="mb-4 sm:mb-5 rounded-xl sm:rounded-2xl overflow-hidden border border-[#E6DFD5] bg-[#FAF8F5] cursor-pointer group/img relative shadow-2xs hover:shadow-md transition-all"
+                    className="mb-4 sm:mb-5 rounded-xl sm:rounded-2xl overflow-hidden border border-[#EAE3D8] bg-[#FAF8F5] group/img relative shadow-2xs transition-all"
                     title={`Click to open ${project.title} interactive simulation`}
                   >
                     <div className="relative aspect-16/10 w-full overflow-hidden bg-[#FAF8F5]">
                       <img
                         src={project.imageUrl}
                         alt={`${project.title} Preview`}
-                        className="w-full h-full object-cover object-top transition-transform duration-300 group-hover/img:scale-102"
+                        className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-102"
                         loading="lazy"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/images/about-workspace.svg";
-                        }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
                         <span className="text-white text-[10px] sm:text-[11px] font-heading-sans font-semibold flex items-center gap-1.5 bg-[#1C1613]/90 px-3 py-1 rounded-full backdrop-blur-xs">
                           <Play className="w-3 h-3 fill-current text-[#E06A26]" />
                           Launch Live Simulator &amp; Specs
@@ -158,22 +155,22 @@ export default function FeaturedProjects() {
                 </p>
 
                 {/* Project Description */}
-                <p className="text-xs sm:text-sm text-[#574B42] leading-relaxed mb-4 sm:mb-6">
+                <p className="text-xs sm:text-sm text-[#574B42] leading-relaxed mb-4 sm:mb-5">
                   {project.description}
                 </p>
 
-                {/* Metrics / Architecture Strip */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 sm:mb-6 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#FAF8F5] border border-[#EFE9E1]">
+                {/* Metrics / Architecture Strip - Clean & Non-boxy */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 py-2.5 border-y border-[#F4EFEA] mb-4">
                   {project.metrics.map((m, mIdx) => (
-                    <div key={mIdx} className="flex flex-col">
-                      <span className="text-[9px] sm:text-[10px] font-code-mono text-[#8A7B70] uppercase">{m.label}</span>
-                      <span className="font-heading-sans font-bold text-xs sm:text-sm text-[#1C1613]">{m.value}</span>
+                    <div key={mIdx} className="flex items-center gap-1.5 text-xs">
+                      <span className="text-[10px] font-code-mono text-[#8A7B70] uppercase">{m.label}:</span>
+                      <span className="font-heading-sans font-bold text-[#1C1613]">{m.value}</span>
                     </div>
                   ))}
                 </div>
 
                 {/* Highlights List */}
-                <div className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+                <div className="space-y-1.5 mb-4 sm:mb-6">
                   {project.architectureHighlights.slice(0, 2).map((highlight, hIdx) => (
                     <div key={hIdx} className="flex items-start gap-2 text-xs text-[#574B42]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
@@ -183,11 +180,11 @@ export default function FeaturedProjects() {
                 </div>
 
                 {/* Tech Chips */}
-                <div className="flex flex-wrap gap-1.5 mb-6 sm:mb-8">
+                <div className="flex flex-wrap gap-1.5 mb-5 sm:mb-6">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#FAF8F5] border border-[#E6DFD5] text-[10px] sm:text-[11px] font-code-mono text-[#574B42]"
+                      className="px-2 py-0.5 rounded-full bg-[#FAF8F5] border border-[#E6DFD5] text-[10px] sm:text-[11px] font-code-mono text-[#574B42]"
                     >
                       {tech}
                     </span>
@@ -198,17 +195,22 @@ export default function FeaturedProjects() {
               {/* Bottom Interactive Triggers */}
               <div className="pt-3 sm:pt-4 border-t border-[#F4EFEA] flex items-center justify-between gap-3">
                 <button
-                  onClick={() => setActiveModalProject(project)}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveModalProject(project);
+                  }}
                   className="btn-primary-warm text-xs py-2 px-3.5 sm:px-4 flex-1 justify-center"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Launch Live Simulation &amp; Specs</span>
+                  <span>Launch Live Simulator &amp; Specs</span>
                 </button>
 
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className="p-2 sm:p-2.5 text-[#574B42] hover:text-[#1C1613] hover:bg-[#F4EFEA] rounded-full transition-colors border border-[#E6DFD5] shrink-0"
                   title="View repository on GitHub"
                 >
@@ -255,7 +257,7 @@ export default function FeaturedProjects() {
 
           {/* Catalog Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {(showAllCatalog || catalogCategory !== "All" || searchQuery.trim() !== "" ? filteredCatalog : filteredCatalog.slice(0, 6)).map((item, idx) => (
+            {filteredCatalog.map((item, idx) => (
               <div
                 key={idx}
                 className="tactile-card rounded-2xl p-5 bg-white border border-[#E6DFD5] flex flex-col justify-between hover:border-[#D6CBC0] transition-colors"
@@ -307,30 +309,6 @@ export default function FeaturedProjects() {
               </div>
             ))}
           </div>
-
-          {/* Expand / Collapse Toggle for Catalog */}
-          {filteredCatalog.length > 6 && !showAllCatalog && catalogCategory === "All" && searchQuery.trim() === "" && (
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => setShowAllCatalog(true)}
-                className="btn-secondary-warm py-3 px-6 text-xs inline-flex items-center gap-2"
-              >
-                <span>Explore All {filteredCatalog.length} Open-Source Repositories</span>
-                <ArrowDown className="w-3.5 h-3.5 text-[#E06A26]" />
-              </button>
-            </div>
-          )}
-
-          {showAllCatalog && filteredCatalog.length > 6 && (
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => setShowAllCatalog(false)}
-                className="btn-secondary-warm py-2.5 px-5 text-xs inline-flex items-center gap-2"
-              >
-                <span>Collapse to Top 6 Repositories</span>
-              </button>
-            </div>
-          )}
         </div>
 
       </div>

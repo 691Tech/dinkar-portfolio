@@ -86,7 +86,7 @@ My journey centers around the intersection of engineering discipline and creativ
 
 I am deeply curious about AI integration, intelligent automation, and mastering fundamental Data Structures & Algorithms. Every line of code I write is guided by intentionality, clean architectural patterns, and user empathy.`,
   availabilityStatus: "Available for Internships & Projects",
-  profilePhoto: "/images/dinkar-profile.jpg"
+  adminPin: "6910"
 };
 
 export const PROJECTS_DATA: Project[] = [
@@ -520,7 +520,7 @@ export const CATALOG_PROJECTS: CatalogProject[] = [
   },
   {
     title: "Scientific Data Visualization Software (Groot)",
-    description: "Extensible 2D/3D physics and data charting framework developed in Java for nuclear and high-energy physics datasets.",
+    description: "High-performance scientific data charting framework developed in Java for nuclear and high-energy physics datasets.",
     category: "JAVA",
     categoryKey: "java_core",
     githubLink: "https://github.com/gavalian/groot",

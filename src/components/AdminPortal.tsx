@@ -18,8 +18,7 @@ export default function AdminPortal({ isOpen, onClose }: AdminPortalProps) {
   const [activeTab, setActiveTab] = useState<"inquiries" | "telemetry" | "status">("inquiries");
   const [portfolioStatus, setPortfolioStatus] = useState("Open for Engineering Internships & Projects");
 
-  // Private administrator authentication credential
-  const correctPin = "6910";
+  const correctPin = PERSONAL_DETAILS.adminPin || "6910";
 
   useEffect(() => {
     if (isOpen && isAuthenticated) {
@@ -118,10 +117,10 @@ export default function AdminPortal({ isOpen, onClose }: AdminPortalProps) {
               <div className="relative">
                 <input
                   type="password"
-                  maxLength={12}
+                  maxLength={8}
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
-                  placeholder="Enter administrator PIN"
+                  placeholder="Enter 4-digit PIN (default: 6910)"
                   className="w-full px-4 py-3 text-center text-sm font-code-mono tracking-widest bg-white border border-[#E6DFD5] rounded-xl focus:outline-hidden focus:border-[#E06A26]"
                   autoFocus
                 />
@@ -139,8 +138,8 @@ export default function AdminPortal({ isOpen, onClose }: AdminPortalProps) {
                 <span>Authenticate Administrator</span>
               </button>
 
-              <div className="text-[11px] text-[#8A7B70] pt-2 text-center">
-                Authorized administrator access only &bull; End-to-end encrypted session
+              <div className="text-[11px] text-[#8A7B70] pt-2">
+                Protected by client PIN verification &bull; Default PIN: <strong className="font-code-mono">6910</strong>
               </div>
             </form>
           </div>
